@@ -3,494 +3,265 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Korkmazlar Yurt — Yönetim Sistemi</title>
+<title>Korkmazlar Yurt — Yönetim Sistemi v3</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-  /* Site'den alınan renkler */
-  --primary:       #043132;
-  --primary-600:   #032828;
-  --primary-100:   #b3d3d3;
-  --primary-50:    #e6f0f0;
-  --primary-text:  #ffffff;
-
-  --bg:            #f8fafc;
-  --bg-card:       #ffffff;
-  --txt:           #1e293b;
-  --txt-muted:     #64748b;
-  --txt-light:     #94a3b8;
-  --border:        #e2e8f0;
-  --border-focus:  #043132;
-
-  --green:         #16a34a;
-  --green-bg:      #dcfce7;
-  --green-text:    #15803d;
-  --amber:         #d97706;
-  --amber-bg:      #fef3c7;
-  --amber-text:    #b45309;
-  --red:           #dc2626;
-  --red-bg:        #fee2e2;
-  --red-text:      #b91c1c;
-  --blue:          #2563eb;
-  --blue-bg:       #dbeafe;
-  --blue-text:     #1d4ed8;
-  --gray-bg:       #f1f5f9;
-  --gray-text:     #475569;
-
-  --radius:        6px;
-  --radius-md:     8px;
-  --radius-lg:     12px;
-  --shadow-sm:     0 1px 2px 0 rgba(0,0,0,0.05);
-  --shadow:        0 1px 3px 0 rgba(0,0,0,0.10), 0 1px 2px -1px rgba(0,0,0,0.10);
-  --shadow-md:     0 4px 6px -1px rgba(0,0,0,0.10), 0 2px 4px -2px rgba(0,0,0,0.10);
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --p:#043132;--p6:#032828;--p1:#b3d3d3;--p5:#e6f0f0;
+  --bg:#f8fafc;--card:#fff;--txt:#1e293b;--muted:#64748b;--light:#94a3b8;
+  --border:#e2e8f0;--radius:6px;--radius-md:8px;--radius-lg:12px;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.05);
+  --shadow:0 1px 3px rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1);
+  --shadow-md:0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1);
+  --green:#16a34a;--gbg:#dcfce7;--gtxt:#15803d;
+  --amber:#d97706;--abg:#fef3c7;--atxt:#b45309;
+  --red:#dc2626;--rbg:#fee2e2;--rtxt:#b91c1c;
+  --blue:#2563eb;--bbg:#dbeafe;--btxt:#1d4ed8;
+  --purple:#7c3aed;--pbg:#ede9fe;--ptxt:#5b21b6;
 }
+html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.screen{display:none;min-height:100vh}
+.screen.active{display:flex;flex-direction:column}
 
-html, body {
-  height: 100%;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: var(--bg);
-  color: var(--txt);
-  font-size: 14px;
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-}
+/* ── LOGIN ─────────────────── */
+#loginScreen{align-items:center;justify-content:center;background:var(--bg);padding:2rem 1rem}
+.login-box{width:100%;max-width:420px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-md);overflow:hidden}
+.login-top{background:var(--p);padding:28px 28px 24px;text-align:center}
+.login-logo{width:52px;height:52px;background:rgba(255,255,255,.15);border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;border:1.5px solid rgba(255,255,255,.25);font-size:20px;font-weight:700;color:#fff;letter-spacing:-1px}
+.login-top h1{color:#fff;font-size:17px;font-weight:600}
+.login-top p{color:rgba(255,255,255,.6);font-size:12px;margin-top:3px}
+.login-body{padding:20px 24px 24px}
+.login-section-label{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;margin-top:4px}
+.role-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:16px}
+.role-card{padding:8px 4px;border:1.5px solid var(--border);border-radius:var(--radius-md);cursor:pointer;text-align:center;font-size:11px;font-weight:500;color:var(--muted);background:var(--bg);transition:all .15s}
+.role-card:hover{border-color:var(--p1);color:var(--p)}
+.role-card.active{border-color:var(--p);background:var(--p5);color:var(--p);font-weight:600}
+.role-card .rc-icon{font-size:18px;display:block;margin-bottom:4px}
+.role-card .rc-sub{font-size:9px;color:var(--light);margin-top:2px}
+.form-field{margin-bottom:12px}
+.form-field label{display:block;font-size:12px;font-weight:500;color:var(--muted);margin-bottom:4px}
+.form-field input,.form-field select{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-md);font-size:13px;color:var(--txt);background:var(--card);outline:none;font-family:inherit;transition:border-color .15s}
+.form-field input:focus,.form-field select:focus{border-color:var(--p);box-shadow:0 0 0 3px rgba(4,49,50,.08)}
+.btn-login{width:100%;padding:10px;background:var(--p);color:#fff;border:none;border-radius:var(--radius-md);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:opacity .15s}
+.btn-login:hover{opacity:.9}
+.login-demo{font-size:11px;color:var(--light);text-align:center;margin-top:14px;line-height:1.8;padding:10px;background:var(--bg);border-radius:var(--radius-md)}
+.login-demo b{color:var(--muted)}
 
-/* ══════════════════════════════════════
-   SCREENS
-══════════════════════════════════════ */
-.screen { display: none; flex-direction: column; min-height: 100vh; }
-.screen.active { display: flex; }
+/* ── TOP NAV ─────────────────── */
+#mainApp{flex-direction:column}
+.topnav{height:60px;background:var(--card);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 20px;position:sticky;top:0;z-index:50;box-shadow:var(--shadow-sm);flex-shrink:0}
+.tn-brand{display:flex;align-items:center;gap:10px}
+.tn-logo{width:34px;height:34px;background:var(--p);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff}
+.tn-title{font-size:14px;font-weight:600;color:var(--txt)}
+.tn-title span{font-weight:400;color:var(--muted);font-size:12px;margin-left:4px}
+.tn-tabs{display:flex;gap:2px;align-items:center}
+.tn-tab{padding:5px 12px;border-radius:var(--radius-md);font-size:13px;font-weight:500;cursor:pointer;border:none;background:transparent;color:var(--muted);transition:all .15s;font-family:inherit;white-space:nowrap}
+.tn-tab:hover{background:var(--bg);color:var(--txt)}
+.tn-tab.active{background:var(--p);color:#fff}
+.tn-right{display:flex;align-items:center;gap:8px}
+.tn-user{display:flex;align-items:center;gap:7px;padding:5px 10px 5px 6px;border:1px solid var(--border);border-radius:var(--radius-md);background:var(--bg);font-size:12px}
+.tn-avatar{width:26px;height:26px;border-radius:50%;background:var(--p);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
+.tn-uname{font-weight:500;color:var(--txt)}
+.tn-urole{font-size:10px;color:var(--muted)}
+.btn-logout{padding:5px 12px;border:1px solid var(--border);border-radius:var(--radius-md);background:var(--card);color:var(--muted);font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;transition:all .15s}
+.btn-logout:hover{background:var(--rbg);color:var(--rtxt);border-color:#fecaca}
 
-/* ══════════════════════════════════════
-   LOGIN
-══════════════════════════════════════ */
-#loginScreen {
-  align-items: center;
-  justify-content: center;
-  background: var(--bg);
-  padding: 2rem 1rem;
-  gap: 0;
-}
+/* ── PAGE ─────────────────── */
+.page-wrap{flex:1;max-width:1140px;width:100%;margin:0 auto;padding:20px}
+.page-hdr{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px;gap:10px;flex-wrap:wrap}
+.page-hdr-l h2{font-size:19px;font-weight:700}
+.page-hdr-l p{font-size:12px;color:var(--muted);margin-top:2px}
+.page-hdr-r{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
 
-.login-box {
-  width: 100%;
-  max-width: 400px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
-  overflow: hidden;
-}
-.login-top {
-  background: var(--primary);
-  padding: 32px 32px 28px;
-  text-align: center;
-}
-.login-logo-circle {
-  width: 56px; height: 56px;
-  background: rgba(255,255,255,0.15);
-  border-radius: 14px;
-  display: flex; align-items: center; justify-content: center;
-  margin: 0 auto 14px;
-  border: 1.5px solid rgba(255,255,255,0.25);
-}
-.login-logo-circle span { color: #fff; font-size: 22px; font-weight: 700; letter-spacing: -1px; }
-.login-top h1 { color: #fff; font-size: 18px; font-weight: 600; }
-.login-top p  { color: rgba(255,255,255,0.6); font-size: 12px; margin-top: 4px; }
+/* ── STATS ─────────────────── */
+.stats-4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.stats-3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px 16px;box-shadow:var(--shadow-sm)}
+.stat-label{font-size:11px;font-weight:500;color:var(--muted);margin-bottom:5px}
+.stat-value{font-size:26px;font-weight:700;line-height:1}
+.stat-sub{font-size:11px;color:var(--muted);margin-top:4px}
+.sc-green .stat-value{color:var(--green)}.sc-amber .stat-value{color:var(--amber)}
+.sc-blue .stat-value{color:var(--blue)}.sc-red .stat-value{color:var(--red)}
+.sc-purple .stat-value{color:var(--purple)}
 
-.login-body { padding: 24px 28px 28px; }
+/* ── CARDS & GRIDS ─────────────────── */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm)}
+.card-body{padding:18px 20px}
+.card-title{font-size:13px;font-weight:600;margin-bottom:14px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px}
+.g14{display:grid;grid-template-columns:1.3fr 1fr;gap:14px;margin-bottom:14px}
 
-.role-tabs {
-  display: grid; grid-template-columns: repeat(3,1fr);
-  gap: 0; border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden;
-  margin-bottom: 20px;
-}
-.role-tab {
-  padding: 9px 6px; font-size: 13px; font-weight: 500; cursor: pointer;
-  background: var(--bg); color: var(--txt-muted); border: none;
-  transition: all 0.15s; text-align: center;
-}
-.role-tab:not(:last-child) { border-right: 1px solid var(--border); }
-.role-tab.active { background: var(--primary); color: #fff; }
+/* ── BUTTONS ─────────────────── */
+.btn{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:var(--radius-md);font-size:13px;font-weight:500;cursor:pointer;border:1px solid transparent;transition:all .15s;font-family:inherit;white-space:nowrap}
+.btn-primary{background:var(--p);color:#fff;border-color:var(--p)}.btn-primary:hover{background:var(--p6)}
+.btn-secondary{background:var(--card);color:var(--txt);border-color:var(--border)}.btn-secondary:hover{background:var(--bg)}
+.btn-danger{background:var(--rbg);color:var(--rtxt);border-color:#fecaca}
+.btn-success{background:var(--gbg);color:var(--gtxt);border-color:#86efac}
+.btn-warning{background:var(--abg);color:var(--atxt);border-color:#fcd34d}
+.btn-sm{padding:4px 10px;font-size:12px}.btn-xs{padding:3px 8px;font-size:11px}
 
-.form-field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
-.form-field label { font-size: 12px; font-weight: 500; color: var(--txt-muted); }
-.form-field input {
-  padding: 9px 12px; border: 1px solid var(--border); border-radius: var(--radius-md);
-  font-size: 14px; color: var(--txt); background: var(--bg-card);
-  outline: none; transition: border-color 0.15s;
-  font-family: inherit;
-}
-.form-field input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(4,49,50,0.08); }
+/* ── BADGES ─────────────────── */
+.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500;white-space:nowrap}
+.bg-green{background:var(--gbg);color:var(--gtxt)}.bg-amber{background:var(--abg);color:var(--atxt)}
+.bg-red{background:var(--rbg);color:var(--rtxt)}.bg-blue{background:var(--bbg);color:var(--btxt)}
+.bg-gray{background:#f1f5f9;color:#475569}.bg-purple{background:var(--pbg);color:var(--ptxt)}
+.bg-primary{background:var(--p5);color:var(--p)}
 
-.btn-login {
-  width: 100%; padding: 10px; background: var(--primary); color: #fff;
-  border: none; border-radius: var(--radius-md); font-size: 14px; font-weight: 600;
-  cursor: pointer; transition: background 0.15s; font-family: inherit; margin-top: 4px;
-}
-.btn-login:hover { background: var(--primary-600); }
+/* ── TABLE ─────────────────── */
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+thead th{text-align:left;padding:9px 13px;font-size:11px;font-weight:600;color:var(--muted);border-bottom:1px solid var(--border);background:var(--bg);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+tbody td{padding:10px 13px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:middle}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:var(--bg)}
+.td-name{font-weight:600}.td-muted{color:var(--muted);font-size:12px}
 
-.login-demo {
-  text-align: center; font-size: 12px; color: var(--txt-light);
-  margin-top: 14px; line-height: 1.8;
-}
-.login-demo b { color: var(--txt-muted); font-weight: 600; }
+/* ── ACTION BAR ─────────────────── */
+.action-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border)}
+.action-bar-title{font-size:13px;font-weight:600}
 
-/* ══════════════════════════════════════
-   TOP NAV (site'deki gibi)
-══════════════════════════════════════ */
-#mainApp { flex-direction: column; }
+/* ── FORM ─────────────────── */
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.form-group{display:flex;flex-direction:column;gap:4px}
+.form-group label{font-size:12px;font-weight:500;color:var(--muted)}
+.form-group input,.form-group select,.form-group textarea{padding:8px 11px;border:1px solid var(--border);border-radius:var(--radius-md);font-size:13px;color:var(--txt);background:var(--card);outline:none;font-family:inherit;width:100%;transition:border-color .15s}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--p);box-shadow:0 0 0 3px rgba(4,49,50,.08)}
+.form-group textarea{resize:vertical;min-height:75px}
+.form-group input[readonly]{background:var(--bg)}
 
-.topnav {
-  height: 64px;
-  background: var(--bg-card);
-  border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 24px;
-  position: sticky; top: 0; z-index: 50;
-  box-shadow: var(--shadow-sm);
-  flex-shrink: 0;
-}
-.topnav-brand { display: flex; align-items: center; gap: 10px; }
-.topnav-logo {
-  width: 36px; height: 36px;
-  background: var(--primary); border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  font-weight: 700; font-size: 14px; color: #fff; letter-spacing: -0.5px;
-}
-.topnav-title { font-size: 15px; font-weight: 600; color: var(--txt); }
-.topnav-title span { font-weight: 400; color: var(--txt-muted); font-size: 13px; margin-left: 4px; }
+/* ── MODAL ─────────────────── */
+.modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.4);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;z-index:1000}
+.modal-overlay.open{display:flex}
+.modal-box{background:var(--card);border-radius:var(--radius-lg);border:1px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,.15);width:440px;max-width:calc(100vw - 24px);max-height:90vh;overflow-y:auto}
+.modal-hdr{padding:16px 20px 0;display:flex;align-items:center;justify-content:space-between}
+.modal-hdr h3{font-size:15px;font-weight:700}
+.modal-x{width:26px;height:26px;border-radius:50%;background:var(--bg);border:1px solid var(--border);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;color:var(--muted);line-height:1}
+.modal-x:hover{background:var(--rbg);color:var(--rtxt);border-color:#fecaca}
+.modal-body{padding:14px 20px;display:flex;flex-direction:column;gap:11px}
+.modal-footer{padding:0 20px 18px;display:flex;gap:7px;justify-content:flex-end}
 
-.topnav-tabs { display: flex; align-items: center; gap: 2px; }
-.topnav-tab {
-  padding: 6px 14px; border-radius: var(--radius-md);
-  font-size: 13px; font-weight: 500; cursor: pointer;
-  border: none; background: transparent; color: var(--txt-muted);
-  transition: all 0.15s; font-family: inherit;
-}
-.topnav-tab:hover { background: var(--bg); color: var(--txt); }
-.topnav-tab.active { background: var(--primary); color: #fff; }
+/* ── PROGRESS ─────────────────── */
+.prog-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.prog-lbl{font-size:12px;color:var(--muted);width:70px;flex-shrink:0}
+.prog-bar{flex:1;height:6px;background:var(--bg);border-radius:3px;overflow:hidden;border:1px solid var(--border)}
+.prog-fill{height:100%;border-radius:3px;background:var(--p);transition:width .5s ease}
+.prog-pct{font-size:12px;font-weight:600;min-width:32px;text-align:right}
 
-.topnav-right { display: flex; align-items: center; gap: 10px; }
-.topnav-user {
-  display: flex; align-items: center; gap: 8px;
-  padding: 6px 12px 6px 8px;
-  border: 1px solid var(--border); border-radius: var(--radius-md);
-  background: var(--bg); cursor: pointer; font-size: 13px;
-}
-.topnav-avatar {
-  width: 28px; height: 28px; border-radius: 50%;
-  background: var(--primary); color: #fff;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 11px; font-weight: 600; flex-shrink: 0;
-}
-.topnav-uname { font-weight: 500; color: var(--txt); }
-.topnav-urole { font-size: 11px; color: var(--txt-muted); }
+/* ── NOTICE ─────────────────── */
+.notice{padding:11px 14px;border-radius:var(--radius-md);background:var(--p5);border:1px solid var(--p1);color:var(--p);font-size:12px;line-height:1.6}
+.notice-warn{background:var(--abg);border-color:#fcd34d;color:var(--atxt)}
+.notice-danger{background:var(--rbg);border-color:#fecaca;color:var(--rtxt)}
 
-.btn-logout-top {
-  padding: 6px 14px; border: 1px solid var(--border); border-radius: var(--radius-md);
-  background: var(--bg-card); color: var(--txt-muted); font-size: 13px; font-weight: 500;
-  cursor: pointer; transition: all 0.15s; font-family: inherit;
-}
-.btn-logout-top:hover { background: var(--red-bg); color: var(--red-text); border-color: var(--red); }
+/* ── YATAK GRID ─────────────────── */
+.bed-grid-wrap{margin-bottom:16px}
+.floor-tabs{display:flex;gap:3px;padding:3px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-md);width:fit-content;margin-bottom:14px;flex-wrap:wrap}
+.floor-tab{padding:5px 12px;border-radius:var(--radius);border:none;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;background:transparent;color:var(--muted);transition:all .15s}
+.floor-tab:hover{background:var(--card);color:var(--txt)}
+.floor-tab.active{background:var(--p);color:#fff;box-shadow:var(--shadow-sm)}
+.room-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-md);padding:12px;margin-bottom:10px}
+.room-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.room-no{font-size:13px;font-weight:700}
+.room-type{font-size:11px;color:var(--muted)}
+.bed-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:6px}
+.bed-item{border:1.5px solid;border-radius:var(--radius-md);padding:8px 6px;text-align:center;font-size:11px;font-weight:600;cursor:pointer;transition:all .12s;position:relative}
+.bed-item:hover{transform:scale(1.04);box-shadow:var(--shadow)}
+.bed-item.empty{background:#fff;border-color:var(--border);color:var(--muted)}
+.bed-item.occupied{background:var(--rbg);border-color:#fca5a5;color:var(--rtxt)}
+.bed-item.reserved{background:var(--abg);border-color:#fcd34d;color:var(--atxt)}
+.bed-item.maintenance{background:var(--bbg);border-color:#93c5fd;color:var(--btxt)}
+.bed-no{font-size:10px;font-weight:700;display:block}
+.bed-name{font-size:9px;opacity:.8;display:block;margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.legend{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.leg-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)}
+.leg-dot{width:10px;height:10px;border-radius:2px;border:1px solid transparent}
 
-/* ══════════════════════════════════════
-   PAGE LAYOUT
-══════════════════════════════════════ */
-.page-content {
-  flex: 1;
-  max-width: 1100px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 24px 24px;
-}
+/* ── BAŞVURU AKIŞ ─────────────────── */
+.app-flow{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.flow-step{flex:1;min-width:140px;padding:12px 14px;border-radius:var(--radius-md);border:1px solid var(--border);background:var(--card);text-align:center;position:relative}
+.flow-step::after{content:'→';position:absolute;right:-12px;top:50%;transform:translateY(-50%);color:var(--light);font-size:16px;z-index:1}
+.flow-step:last-child::after{display:none}
+.flow-icon{font-size:20px;margin-bottom:4px;display:block}
+.flow-title{font-size:12px;font-weight:600}
+.flow-sub{font-size:10px;color:var(--muted);margin-top:2px}
+.flow-step.done{border-color:var(--green);background:var(--gbg)}
+.flow-step.active-step{border-color:var(--p);background:var(--p5)}
 
-.page-header {
-  display: flex; align-items: flex-start; justify-content: space-between;
-  margin-bottom: 20px;
-}
-.page-header-left h2 { font-size: 20px; font-weight: 700; color: var(--txt); }
-.page-header-left p  { font-size: 13px; color: var(--txt-muted); margin-top: 3px; }
-.page-header-right   { display: flex; gap: 8px; align-items: center; }
+/* ── FİNANS ─────────────────── */
+.fin-row{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--border);font-size:13px}
+.fin-row:last-child{border-bottom:none}
+.fin-name{font-weight:600}
+.fin-meta{font-size:11px;color:var(--muted);margin-top:2px}
+.fin-amount{font-weight:700;font-size:14px}
+.fin-amount.debt{color:var(--red)}
+.fin-amount.paid{color:var(--green)}
+.fin-amount.partial{color:var(--amber)}
 
-/* ══════════════════════════════════════
-   CARDS
-══════════════════════════════════════ */
-.card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
-}
-.card-body { padding: 20px; }
-.card-title { font-size: 14px; font-weight: 600; color: var(--txt); margin-bottom: 14px; }
+/* ── CHART BAR ─────────────────── */
+.chart-bars{display:flex;align-items:flex-end;gap:6px;height:80px;padding-top:8px}
+.chart-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.chart-bar{width:100%;border-radius:3px 3px 0 0;background:var(--p);transition:height .4s ease;min-height:4px}
+.chart-bar-lbl{font-size:9px;color:var(--muted);white-space:nowrap}
+.chart-bar-val{font-size:9px;font-weight:600;color:var(--txt)}
 
-/* STAT CARDS */
-.stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 20px; }
-.stat-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 16px 18px; box-shadow: var(--shadow-sm); }
-.stat-label { font-size: 12px; font-weight: 500; color: var(--txt-muted); margin-bottom: 6px; }
-.stat-value { font-size: 28px; font-weight: 700; line-height: 1; }
-.stat-sub   { font-size: 12px; color: var(--txt-muted); margin-top: 5px; }
-.stat-card.green .stat-value { color: var(--green); }
-.stat-card.amber .stat-value { color: var(--amber); }
-.stat-card.blue  .stat-value { color: var(--blue); }
-.stat-card.red   .stat-value { color: var(--red); }
+/* ── SMS/WA ─────────────────── */
+.msg-template{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-md);padding:12px 14px;margin-bottom:8px}
+.msg-template-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.msg-template-name{font-size:13px;font-weight:600}
+.msg-template-body{font-size:12px;color:var(--muted);line-height:1.6;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:8px 10px}
 
-/* TWO COL */
-.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
-.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+/* ── HERO ─────────────────── */
+.hero-card{background:var(--p);color:#fff;border-radius:var(--radius-lg);padding:18px 20px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}
+.hero-card h3{font-size:17px;font-weight:700}
+.hero-card p{font-size:12px;opacity:.65;margin-top:3px}
+.hero-badge{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);border-radius:var(--radius-md);padding:7px 14px;font-size:12px}
 
-/* ══════════════════════════════════════
-   BUTTONS
-══════════════════════════════════════ */
-.btn {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 8px 16px; border-radius: var(--radius-md);
-  font-size: 13px; font-weight: 500; cursor: pointer;
-  border: 1px solid transparent; transition: all 0.15s; font-family: inherit;
-}
-.btn-primary { background: var(--primary); color: #fff; border-color: var(--primary); }
-.btn-primary:hover { background: var(--primary-600); }
-.btn-secondary { background: var(--bg-card); color: var(--txt); border-color: var(--border); }
-.btn-secondary:hover { background: var(--bg); }
-.btn-danger { background: var(--red-bg); color: var(--red-text); border-color: #fecaca; }
-.btn-sm { padding: 5px 12px; font-size: 12px; }
-.btn-xs { padding: 3px 9px; font-size: 11px; }
+/* ── INFO TABLE ─────────────────── */
+.info-tbl{width:100%;border-collapse:collapse}
+.info-tbl td{padding:9px 0;border-bottom:1px solid var(--border);font-size:13px}
+.info-tbl tr:last-child td{border-bottom:none}
+.info-tbl .ik{color:var(--muted);font-size:12px;width:45%}
+.info-tbl .iv{font-weight:600}
 
-/* ══════════════════════════════════════
-   BADGES
-══════════════════════════════════════ */
-.badge {
-  display: inline-flex; align-items: center;
-  padding: 2px 8px; border-radius: 20px;
-  font-size: 11px; font-weight: 500; white-space: nowrap;
-}
-.badge-green { background: var(--green-bg); color: var(--green-text); }
-.badge-amber { background: var(--amber-bg); color: var(--amber-text); }
-.badge-red   { background: var(--red-bg);   color: var(--red-text); }
-.badge-blue  { background: var(--blue-bg);  color: var(--blue-text); }
-.badge-gray  { background: var(--gray-bg);  color: var(--gray-text); }
-.badge-primary { background: var(--primary-50); color: var(--primary); }
+/* ── ARIZA ─────────────────── */
+.ariza-item{display:flex;gap:12px;align-items:flex-start;padding:12px 16px;border-bottom:1px solid var(--border)}
+.ariza-item:last-child{border-bottom:none}
+.ariza-icon{width:34px;height:34px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:15px}
+.ai-urgent{background:var(--rbg)}.ai-normal{background:var(--abg)}.ai-done{background:var(--gbg)}
+.ariza-title{font-size:13px;font-weight:600}
+.ariza-meta{font-size:11px;color:var(--muted);margin-top:2px}
+.ariza-badges{display:flex;gap:5px;margin-top:6px;flex-wrap:wrap}
 
-/* ══════════════════════════════════════
-   TABLES
-══════════════════════════════════════ */
-.table-wrap { overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; }
-thead th {
-  text-align: left; padding: 10px 14px;
-  font-size: 11px; font-weight: 600; color: var(--txt-muted);
-  border-bottom: 1px solid var(--border);
-  background: var(--bg); text-transform: uppercase; letter-spacing: 0.04em;
-}
-tbody td { padding: 11px 14px; border-bottom: 1px solid var(--border); font-size: 13px; vertical-align: middle; }
-tbody tr:last-child td { border-bottom: none; }
-tbody tr:hover td { background: var(--bg); }
-.td-name { font-weight: 600; color: var(--txt); }
-.td-muted { color: var(--txt-muted); font-size: 12px; }
+/* ── DUYURU ─────────────────── */
+.duyuru-item{border-left:3px solid var(--p);padding:10px 14px;background:var(--p5);border-radius:0 var(--radius-md) var(--radius-md) 0;margin-bottom:8px}
+.duyuru-title{font-size:13px;font-weight:600}
+.duyuru-date{font-size:11px;color:var(--muted);margin-top:2px}
+.duyuru-body{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.6}
 
-/* ══════════════════════════════════════
-   ODA PLANI
-══════════════════════════════════════ */
-.floor-tabs {
-  display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 18px;
-  padding: 4px; background: var(--bg); border: 1px solid var(--border);
-  border-radius: var(--radius-md); width: fit-content;
-}
-.floor-tab {
-  padding: 6px 14px; border-radius: var(--radius); border: none;
-  font-size: 13px; font-weight: 500; cursor: pointer; font-family: inherit;
-  background: transparent; color: var(--txt-muted); transition: all 0.15s;
-}
-.floor-tab:hover { background: var(--bg-card); color: var(--txt); }
-.floor-tab.active { background: var(--primary); color: #fff; box-shadow: var(--shadow-sm); }
+/* ── EMPTY ─────────────────── */
+.empty-state{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px}
+.empty-icon{font-size:32px;margin-bottom:10px;opacity:.4}
 
-.legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
-.leg-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--txt-muted); }
-.leg-dot { width: 12px; height: 12px; border-radius: 3px; border: 1px solid transparent; }
+/* ── MINI CHART ─────────────────── */
+.donut{position:relative;width:80px;height:80px;flex-shrink:0}
+.donut svg{transform:rotate(-90deg)}
+.donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:16px;font-weight:700}
+.donut-sub{font-size:9px;color:var(--muted);font-weight:400}
 
-.kat-section { margin-bottom: 20px; }
-.kat-header {
-  font-size: 12px; font-weight: 600; color: var(--txt-muted);
-  padding: 6px 10px; margin-bottom: 8px;
-  background: var(--bg); border: 1px solid var(--border);
-  border-radius: var(--radius-md); display: inline-block;
-  border-left: 3px solid var(--primary);
-  text-transform: uppercase; letter-spacing: 0.04em;
-}
-.oda-grid { display: flex; flex-wrap: wrap; gap: 7px; }
-.oda-cell {
-  width: 58px; height: 50px;
-  border-radius: var(--radius-md); border: 1.5px solid;
-  cursor: pointer; font-size: 11px; font-weight: 600;
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
-  transition: transform 0.12s, box-shadow 0.12s;
-}
-.oda-cell:hover { transform: scale(1.06); box-shadow: var(--shadow); }
-.oda-cell.bos   { background: #fff;          border-color: var(--border); color: var(--txt-muted); }
-.oda-cell.dolu  { background: var(--green-bg); border-color: #86efac; color: var(--green-text); }
-.oda-cell.kism  { background: var(--amber-bg); border-color: #fcd34d; color: var(--amber-text); }
-.oda-cell.tam   { background: var(--red-bg);   border-color: #fca5a5; color: var(--red-text); }
-.oda-cell.bakim { background: var(--blue-bg);  border-color: #93c5fd; color: var(--blue-text); }
-.oda-no   { font-size: 11px; font-weight: 700; }
-.oda-tip  { font-size: 9px; opacity: 0.75; font-weight: 500; }
-
-/* ══════════════════════════════════════
-   FORM ELEMENTS
-══════════════════════════════════════ */
-.form-row   { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.form-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 0; }
-.form-label { font-size: 12px; font-weight: 500; color: var(--txt-muted); }
-.form-control {
-  padding: 8px 12px; border: 1px solid var(--border); border-radius: var(--radius-md);
-  font-size: 13px; color: var(--txt); background: var(--bg-card);
-  outline: none; transition: border-color 0.15s; font-family: inherit; width: 100%;
-}
-.form-control:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(4,49,50,0.08); }
-textarea.form-control { resize: vertical; min-height: 80px; }
-
-/* ══════════════════════════════════════
-   ARIZA CARDS
-══════════════════════════════════════ */
-.ariza-item {
-  display: flex; gap: 14px; align-items: flex-start;
-  padding: 14px 16px;
-  border-bottom: 1px solid var(--border);
-}
-.ariza-item:last-child { border-bottom: none; }
-.ariza-icon {
-  width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center; font-size: 16px;
-}
-.ariza-icon.urgent { background: var(--red-bg); }
-.ariza-icon.normal { background: var(--amber-bg); }
-.ariza-icon.done   { background: var(--green-bg); }
-.ariza-title { font-size: 13px; font-weight: 600; }
-.ariza-meta  { font-size: 12px; color: var(--txt-muted); margin-top: 3px; }
-.ariza-badges{ display: flex; gap: 6px; margin-top: 7px; flex-wrap: wrap; }
-
-/* ══════════════════════════════════════
-   DUYURU
-══════════════════════════════════════ */
-.duyuru-item {
-  border-left: 3px solid var(--primary); padding: 12px 16px;
-  background: var(--primary-50); border-radius: 0 var(--radius-md) var(--radius-md) 0;
-  margin-bottom: 10px;
-}
-.duyuru-title { font-size: 13px; font-weight: 600; }
-.duyuru-date  { font-size: 11px; color: var(--txt-muted); margin-top: 2px; }
-.duyuru-body  { font-size: 12px; color: var(--txt-muted); margin-top: 7px; line-height: 1.6; }
-
-/* ══════════════════════════════════════
-   HERO (öğrenci/personel)
-══════════════════════════════════════ */
-.hero-card {
-  background: var(--primary); color: #fff;
-  border-radius: var(--radius-lg); padding: 22px 24px; margin-bottom: 20px;
-  display: flex; align-items: center; justify-content: space-between;
-}
-.hero-card h3  { font-size: 18px; font-weight: 700; }
-.hero-card p   { font-size: 13px; opacity: 0.65; margin-top: 4px; }
-.hero-badge {
-  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2);
-  border-radius: var(--radius-md); padding: 8px 16px; font-size: 13px;
-}
-
-/* ══════════════════════════════════════
-   INFO TABLE (oda bilgisi vb)
-══════════════════════════════════════ */
-.info-table { width: 100%; border-collapse: collapse; }
-.info-table td { padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
-.info-table tr:last-child td { border-bottom: none; }
-.info-table .ik { color: var(--txt-muted); font-size: 12px; width: 45%; }
-.info-table .iv { font-weight: 600; }
-
-/* ══════════════════════════════════════
-   MODAL
-══════════════════════════════════════ */
-.modal-overlay {
-  position: fixed; inset: 0;
-  background: rgba(15,23,42,0.4);
-  backdrop-filter: blur(3px);
-  display: none; align-items: center; justify-content: center;
-  z-index: 1000;
-}
-.modal-overlay.open { display: flex; }
-.modal-box {
-  background: var(--bg-card); border-radius: var(--radius-lg);
-  border: 1px solid var(--border);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-  width: 420px; max-width: calc(100vw - 32px);
-  max-height: 90vh; overflow-y: auto;
-}
-.modal-header {
-  padding: 18px 22px 0;
-  display: flex; align-items: center; justify-content: space-between;
-}
-.modal-header h3 { font-size: 16px; font-weight: 700; }
-.modal-close {
-  width: 28px; height: 28px; border-radius: 50%;
-  background: var(--bg); border: 1px solid var(--border);
-  cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center;
-  color: var(--txt-muted); line-height: 1;
-}
-.modal-close:hover { background: var(--red-bg); color: var(--red-text); border-color: #fecaca; }
-.modal-body { padding: 16px 22px; display: flex; flex-direction: column; gap: 12px; }
-.modal-footer { padding: 0 22px 20px; display: flex; gap: 8px; justify-content: flex-end; }
-
-/* ══════════════════════════════════════
-   PROGRESS BAR
-══════════════════════════════════════ */
-.progress-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-.progress-label { font-size: 12px; color: var(--txt-muted); width: 80px; flex-shrink: 0; }
-.progress-bar { flex: 1; height: 6px; background: var(--bg); border-radius: 3px; overflow: hidden; border: 1px solid var(--border); }
-.progress-fill { height: 100%; border-radius: 3px; background: var(--primary); transition: width 0.5s ease; }
-.progress-pct { font-size: 12px; font-weight: 600; min-width: 36px; text-align: right; color: var(--txt); }
-
-/* ══════════════════════════════════════
-   DONUT (CSS-only pie)
-══════════════════════════════════════ */
-.donut-wrap { display: flex; align-items: center; gap: 20px; }
-.donut { width: 80px; height: 80px; border-radius: 50%; flex-shrink: 0; }
-.donut-legend { display: flex; flex-direction: column; gap: 6px; }
-.donut-leg-item { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--txt-muted); }
-.donut-leg-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
-
-/* ══════════════════════════════════════
-   BELGE
-══════════════════════════════════════ */
-.belge-item {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 12px 16px; border-bottom: 1px solid var(--border);
-}
-.belge-item:last-child { border-bottom: none; }
-.belge-name { font-size: 13px; font-weight: 600; }
-.belge-date { font-size: 11px; color: var(--txt-muted); margin-top: 2px; }
-
-/* ══════════════════════════════════════
-   EMPTY STATE
-══════════════════════════════════════ */
-.empty-state { text-align: center; padding: 48px 24px; color: var(--txt-muted); font-size: 13px; }
-.empty-state .empty-icon { font-size: 36px; margin-bottom: 12px; opacity: 0.4; }
-
-/* ══════════════════════════════════════
-   NOTICE
-══════════════════════════════════════ */
-.notice {
-  padding: 12px 16px; border-radius: var(--radius-md);
-  background: var(--primary-50); border: 1px solid var(--primary-100);
-  color: var(--primary); font-size: 13px; line-height: 1.6;
-}
-
-/* ══════════════════════════════════════
-   ACTION BAR (tablo üstü)
-══════════════════════════════════════ */
-.action-bar { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; border-bottom: 1px solid var(--border); }
-.action-bar-title { font-size: 14px; font-weight: 600; }
+/* ── BAŞVURU ÖĞRENCİ ─────────────────── */
+.apply-card{max-width:560px;margin:0 auto}
+.apply-steps{display:flex;gap:0;margin-bottom:24px}
+.apply-step{flex:1;text-align:center;position:relative}
+.apply-step::after{content:'';position:absolute;top:14px;right:-50%;width:100%;height:2px;background:var(--border)}
+.apply-step:last-child::after{display:none}
+.apply-step-num{width:28px;height:28px;border-radius:50%;background:var(--bg);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;margin:0 auto 5px;position:relative;z-index:1}
+.apply-step.done .apply-step-num{background:var(--p);border-color:var(--p);color:#fff}
+.apply-step.curr .apply-step-num{background:#fff;border-color:var(--p);color:var(--p)}
+.apply-step-lbl{font-size:10px;color:var(--muted);font-weight:500}
+.apply-step.done .apply-step-lbl{color:var(--p)}
 </style>
 </head>
 <body>
@@ -499,921 +270,1309 @@ textarea.form-control { resize: vertical; min-height: 80px; }
 <div id="loginScreen" class="screen active">
   <div class="login-box">
     <div class="login-top">
-      <div class="login-logo-circle"><span>KY</span></div>
-      <h1>Korkmazlar Yurt</h1>
-      <p>Yönetim Paneli — 2025/2026</p>
+      <div class="login-logo">KY</div>
+      <h1>Korkmazlar Yurt Yönetim Sistemi</h1>
+      <p>Rol bazlı erişim · v3.0</p>
     </div>
     <div class="login-body">
-      <div class="role-tabs">
-        <button class="role-tab active" onclick="setRole('ogrenci')">👩 Öğrenci</button>
-        <button class="role-tab" onclick="setRole('personel')">👥 Personel</button>
-        <button class="role-tab" onclick="setRole('admin')">🔐 Admin</button>
-      </div>
+      <div class="login-section-label">Kullanıcı Rolü</div>
+      <div class="role-grid" id="roleGrid"></div>
       <div class="form-field">
         <label>Kullanıcı Adı</label>
-        <input type="text" id="loginUser" placeholder="Kullanıcı adı / TC No">
+        <input type="text" id="loginUser" placeholder="Kullanıcı adı">
       </div>
       <div class="form-field">
         <label>Şifre</label>
-        <input type="password" id="loginPass" placeholder="Şifrenizi girin">
+        <input type="password" id="loginPass" placeholder="Şifre">
       </div>
-      <button class="btn-login" onclick="doLogin()">Giriş Yap</button>
-      <div class="login-demo">
-        Demo: <b>admin</b> / <b>admin</b> &nbsp;·&nbsp; <b>personel</b> / <b>1234</b> &nbsp;·&nbsp; <b>ogrenci</b> / <b>1234</b>
-      </div>
+      <button class="btn-login" onclick="doLogin()">Giriş Yap →</button>
+      <div class="login-demo" id="loginDemo"></div>
     </div>
   </div>
 </div>
 
 <!-- ══ MAIN APP ══ -->
 <div id="mainApp" class="screen">
-
-  <!-- TOP NAV -->
   <nav class="topnav">
-    <div class="topnav-brand">
-      <div class="topnav-logo">KY</div>
+    <div class="tn-brand">
+      <div class="tn-logo">KY</div>
       <div>
-        <div class="topnav-title">Korkmazlar Yurt <span id="navRoleLabel"></span></div>
+        <div class="tn-title">Korkmazlar Yurt <span id="navRoleLabel"></span></div>
       </div>
     </div>
-
-    <div class="topnav-tabs" id="navTabs"></div>
-
-    <div class="topnav-right">
-      <div class="topnav-user">
-        <div class="topnav-avatar" id="navAvatar">—</div>
+    <div class="tn-tabs" id="navTabs"></div>
+    <div class="tn-right">
+      <div class="tn-user">
+        <div class="tn-avatar" id="navAv">—</div>
         <div>
-          <div class="topnav-uname" id="navName">—</div>
-          <div class="topnav-urole" id="navRole">—</div>
+          <div class="tn-uname" id="navName">—</div>
+          <div class="tn-urole" id="navRole">—</div>
         </div>
       </div>
-      <button class="btn-logout-top" onclick="doLogout()">Çıkış</button>
+      <button class="btn-logout" onclick="doLogout()">Çıkış</button>
     </div>
   </nav>
-
-  <!-- PAGE CONTENT -->
-  <div class="page-content">
-    <div class="page-header">
-      <div class="page-header-left">
+  <div class="page-wrap">
+    <div class="page-hdr">
+      <div class="page-hdr-l">
         <h2 id="pageTitle">—</h2>
         <p id="pageDesc">—</p>
       </div>
-      <div class="page-header-right" id="pageActions"></div>
+      <div class="page-hdr-r" id="pageActions"></div>
     </div>
     <div id="pageBody"></div>
   </div>
-
 </div>
 
 <!-- MODAL -->
-<div class="modal-overlay" id="modalOverlay" onclick="modalOutsideClick(event)">
+<div class="modal-overlay" id="modalOverlay" onclick="modalOC(event)">
   <div class="modal-box" id="modalBox"></div>
 </div>
 
 <script>
-// ─────────────────────────────────────────
-// CONFIG
-// ─────────────────────────────────────────
-const ROLES_CFG = {
-  admin:    { name:'Admin',    initials:'AD', role:'Yönetici', label:'Admin Paneli',
-              nav:['dashboard','odalar','ogrenciler','personel','basvurular','arizalar','duyurular','belgeler'] },
-  personel: { name:'Personel', initials:'PS', role:'Personel',  label:'Personel Paneli',
-              nav:['personelHome','odalar','arizalar','duyurular'] },
-  ogrenci:  { name:'Öğrenci',  initials:'OG', role:'Öğrenci',   label:'Öğrenci Paneli',
-              nav:['ogrenciHome','arizaBildir','belgeTalep','duyurularGor'] }
-};
-const NAV_MAP = {
-  dashboard:     ['📊','Dashboard'],
-  odalar:        ['🏠','Oda Planı'],
-  ogrenciler:    ['👩','Öğrenciler'],
-  personel:      ['👥','Personel'],
-  basvurular:    ['📋','Başvurular'],
-  arizalar:      ['🔧','Arızalar'],
-  duyurular:     ['📢','Duyurular'],
-  belgeler:      ['📄','Belgeler'],
-  personelHome:  ['🏠','Ana Sayfa'],
-  ogrenciHome:   ['🏠','Ana Sayfa'],
-  arizaBildir:   ['🔧','Arıza Bildir'],
-  belgeTalep:    ['📄','Belge Talep'],
-  duyurularGor:  ['📢','Duyurular'],
+// ══════════════════════════════════════
+// ROL TANIMLARI
+// ══════════════════════════════════════
+const ROLES = {
+  mudur:     {name:'Müdür',       initials:'MÜ', label:'Müdür Paneli',    icon:'👨‍💼', sub:'Tam Yetki',       pass:'mudur123',
+               nav:['dashboard','odalar','ogrenciler','personel','basvurular','finans','arizalar','duyurular','belgeler','mesajlar']},
+  operasyon: {name:'Operasyon',   initials:'OP', label:'Operasyon Paneli',icon:'🔧',  sub:'Oda & Arıza',     pass:'ops123',
+               nav:['dashboard','odalar','basvurular','arizalar','duyurular']},
+  muhasebe:  {name:'Muhasebe',    initials:'MH', label:'Muhasebe Paneli', icon:'💰',  sub:'Finans & Borç',   pass:'muh123',
+               nav:['dashboard','finans','ogrenciler','belgeler']},
+  ogrenci:   {name:'Öğrenci',     initials:'ÖG', label:'Öğrenci Paneli',  icon:'👩',  sub:'Kişisel',         pass:'1234',
+               nav:['ogrenciHome','basvuruYap','arizaBildir','belgeTalep','duyurularGor']},
 };
 
-// ─────────────────────────────────────────
-// KAT / ODA
-// ─────────────────────────────────────────
+const NAV_MAP = {
+  dashboard:'📊 Dashboard', odalar:'🏠 Oda & Yatak', ogrenciler:'👩 Öğrenciler',
+  personel:'👥 Personel', basvurular:'📋 Başvurular', finans:'💰 Finans',
+  arizalar:'🔧 Arızalar', duyurular:'📢 Duyurular', belgeler:'📄 Belgeler',
+  mesajlar:'💬 Mesajlar', ogrenciHome:'🏠 Ana Sayfa', basvuruYap:'📝 Başvuru Yap',
+  arizaBildir:'🔧 Arıza Bildir', belgeTalep:'📄 Belge Talep', duyurularGor:'📢 Duyurular'
+};
+
+// ══════════════════════════════════════
+// KAT / ODA / YATAK YAPISI
+// ══════════════════════════════════════
 const KATS = [
-  { ad:'Zemin Kat', kisa:'Z.Kat', odalar:['Z01','Z02'] },
-  { ad:'1. Kat',    kisa:'1.Kat', odalar:['101','102','103','104','105','106','107','108','109','110'] },
-  { ad:'2. Kat',    kisa:'2.Kat', odalar:['201','202','203','204','205','206','207','208','209','210'] },
-  { ad:'3. Kat',    kisa:'3.Kat', odalar:['301','302','303','304','305','306','307','308','309','310'] },
-  { ad:'4. Kat',    kisa:'4.Kat', odalar:['401','402','403','404','405','406','407','408','409','410'] },
-  { ad:'5. Kat',    kisa:'5.Kat', odalar:['501','502','503','504','505','506','507','508','509','510'] },
-  { ad:'6. Kat',    kisa:'6.Kat', odalar:['601','602','603','604','605','606','607','608','609','610'] },
-  { ad:'Çatı Kat',  kisa:'Ç.Kat', odalar:['Ç01','Ç02'] },
+  {ad:'Z.Kat', odalar:['Z01','Z02']},
+  {ad:'1.Kat', odalar:['101','102','103','104','105','106','107','108','109','110']},
+  {ad:'2.Kat', odalar:['201','202','203','204','205','206','207','208','209','210']},
+  {ad:'3.Kat', odalar:['301','302','303','304','305','306','307','308','309','310']},
+  {ad:'4.Kat', odalar:['401','402','403','404','405','406','407','408','409','410']},
+  {ad:'5.Kat', odalar:['501','502','503','504','505','506','507','508','509','510']},
+  {ad:'6.Kat', odalar:['601','602','603','604','605','606','607','608','609','610']},
+  {ad:'Ç.Kat', odalar:['Ç01','Ç02']},
 ];
 const TUM_ODALAR = KATS.flatMap(k=>k.odalar);
 
-function odaTip(oda) {
+function odaKapasite(oda){
   if(oda.startsWith('Z')||oda.startsWith('Ç')) return 2;
-  const n = parseInt(oda.replace(/\D/g,''))%10||10;
+  const n=parseInt(oda.replace(/\D/g,''))%10||10;
   if(n<=2) return 1; if(n===3) return 2; if(n<=6) return 3; return 4;
 }
 
-const odaDurum = {};
+// Yatak veritabanı: {oda_no: [{id, no, durum, ogrenci_id}]}
+const BEDS = {};
 TUM_ODALAR.forEach(o=>{
-  const r=Math.random();
-  odaDurum[o]=r<0.18?'bos':r<0.52?'tam':r<0.80?'kism':'bakim';
+  const k=odaKapasite(o);
+  BEDS[o]=Array.from({length:k},(_,i)=>({
+    id:`${o}-${i+1}`, no:i+1,
+    durum: Math.random()<0.25?'empty': Math.random()<0.6?'occupied': Math.random()<0.8?'reserved':'maintenance',
+    ogrenci_id: null
+  }));
 });
+// Bazı yataklara öğrenci ata
+BEDS['101'][0].durum='occupied'; BEDS['101'][0].ogrenci_id=1;
+BEDS['205'][0].durum='occupied'; BEDS['205'][0].ogrenci_id=2;
+BEDS['301'][0].durum='occupied'; BEDS['301'][0].ogrenci_id=3;
 
-// ─────────────────────────────────────────
-// DATA
-// ─────────────────────────────────────────
-let ogrenciler = [
-  {id:1,ad:'Ayşe Kaya',oda:'101',tc:'12345678901',tel:'0532 123 45 67',email:'ayse@mail.com',durum:'Aktif'},
-  {id:2,ad:'Fatma Demir',oda:'205',tc:'23456789012',tel:'0533 123 45 67',email:'fatma@mail.com',durum:'Aktif'},
-  {id:3,ad:'Zeynep Çelik',oda:'301',tc:'34567890123',tel:'0534 123 45 67',email:'zeynep@mail.com',durum:'Aktif'},
-  {id:4,ad:'Merve Şahin',oda:'402',tc:'45678901234',tel:'0535 123 45 67',email:'merve@mail.com',durum:'Pasif'},
-  {id:5,ad:'Selin Arslan',oda:'503',tc:'56789012345',tel:'0536 123 45 67',email:'selin@mail.com',durum:'Aktif'},
-  {id:6,ad:'Büşra Koç',oda:'601',tc:'67890123456',tel:'0537 123 45 67',email:'busra@mail.com',durum:'Aktif'},
-  {id:7,ad:'Ceren Yıldız',oda:'102',tc:'78901234567',tel:'0538 123 45 67',email:'ceren@mail.com',durum:'Aktif'},
-  {id:8,ad:'Elif Doğan',oda:'203',tc:'89012345678',tel:'0539 123 45 67',email:'elif@mail.com',durum:'Aktif'},
+// ══════════════════════════════════════
+// VERİLER
+// ══════════════════════════════════════
+let ogrenciler=[
+  {id:1,ad:'Ayşe Kaya',tc:'12345678901',tel:'0532 123 45 67',email:'ayse@mail.com',oda:'101',yatak:1,durum:'Aktif',kayit:'2024-09-15'},
+  {id:2,ad:'Fatma Demir',tc:'23456789012',tel:'0533 123 45 67',email:'fatma@mail.com',oda:'205',yatak:1,durum:'Aktif',kayit:'2024-09-16'},
+  {id:3,ad:'Zeynep Çelik',tc:'34567890123',tel:'0534 123 45 67',email:'zeynep@mail.com',oda:'301',yatak:1,durum:'Aktif',kayit:'2024-09-17'},
+  {id:4,ad:'Merve Şahin',tc:'45678901234',tel:'0535 123 45 67',email:'merve@mail.com',oda:null,yatak:null,durum:'Pasif',kayit:'2024-09-18'},
 ];
-let personelList = [
+let personelList=[
   {id:1,ad:'Hüseyin Korkmaz',gorev:'Müdür',tel:'0538 446 75 35',email:'mudur@koy.com',durum:'Aktif'},
-  {id:2,ad:'Hatice Yılmaz',gorev:'Muhasebeci',tel:'0532 111 22 33',email:'muhasebe@koy.com',durum:'Aktif'},
-  {id:3,ad:'Ali Vural',gorev:'Güvenlik',tel:'0533 111 22 33',email:'guvenlik@koy.com',durum:'Aktif'},
-  {id:4,ad:'Emine Doğan',gorev:'Temizlik',tel:'0534 111 22 33',email:'temizlik@koy.com',durum:'Aktif'},
-  {id:5,ad:'Kemal Arslan',gorev:'Bakım-Onarım',tel:'0535 111 22 33',email:'bakim@koy.com',durum:'Aktif'},
-];
-let basvurular = [
-  {id:1,ad:'Buse Koç',tel:'0541 123 45 67',tip:'3 Kişilik',tarih:'2025-08-10',durum:'Bekliyor',not:''},
-  {id:2,ad:'Ceren Yurt',tel:'0542 123 45 67',tip:'1 Kişilik',tarih:'2025-08-09',durum:'Onaylandı',not:''},
-  {id:3,ad:'Dilek Mert',tel:'0543 123 45 67',tip:'2 Kişilik',tarih:'2025-08-08',durum:'Reddedildi',not:'Kapasite dolu'},
-  {id:4,ad:'Hülya Öztürk',tel:'0544 123 45 67',tip:'4 Kişilik',tarih:'2025-08-11',durum:'Bekliyor',not:''},
-];
-let arizalar = [
-  {id:1,oda:'205',konu:'Su tesisatı',aciklama:'Lavabo akıtıyor',tarih:'2025-08-12',durum:'Bekliyor',oncelik:'Yüksek'},
-  {id:2,oda:'301',konu:'Elektrik arızası',aciklama:'Priz çalışmıyor',tarih:'2025-08-11',durum:'İşlemde',oncelik:'Orta'},
-  {id:3,oda:'401',konu:'Klima arızası',aciklama:'Soğutmuyor',tarih:'2025-08-10',durum:'Tamamlandı',oncelik:'Düşük'},
-  {id:4,oda:'101',konu:'Pencere kilidi',aciklama:'Kapanmıyor',tarih:'2025-08-09',durum:'Bekliyor',oncelik:'Orta'},
-];
-let duyurular = [
-  {id:1,baslik:'Yeni Dönem Kaydı Başladı',tarih:'2025-08-01',icerik:'2025-2026 eğitim dönemi öğrenci kayıtlarımız başlamıştır.'},
-  {id:2,baslik:'Hafta Sonu Etkinliği',tarih:'2025-07-28',icerik:'Bu hafta sonu yemekhane salonunda sosyal etkinlik düzenlenecektir.'},
-  {id:3,baslik:'Su Bakım Çalışması',tarih:'2025-07-25',icerik:'15 Ağustos tarihinde su bakım çalışması yapılacağından 09:00-12:00 arası su kesilecektir.'},
-  {id:4,baslik:'İnternet Hızı Artırıldı',tarih:'2025-07-20',icerik:'Tüm katlardaki internet altyapısı yenilendi.'},
-];
-let belgeler = [
-  {id:1,ogrAd:'Ayşe Kaya',tip:'Öğrenci Belgesi',tarih:'2025-08-10',durum:'Hazır'},
-  {id:2,ogrAd:'Fatma Demir',tip:'İkametgah Belgesi',tarih:'2025-08-09',durum:'Bekliyor'},
-  {id:3,ogrAd:'Zeynep Çelik',tip:'Katkı Belgesi',tarih:'2025-08-08',durum:'Hazır'},
+  {id:2,ad:'Hatice Yılmaz',gorev:'Muhasebeci',tel:'0532 111 22 33',email:'muh@koy.com',durum:'Aktif'},
+  {id:3,ad:'Ali Vural',gorev:'Güvenlik',tel:'0533 111 22 33',email:'guv@koy.com',durum:'Aktif'},
+  {id:4,ad:'Emine Doğan',gorev:'Temizlik',tel:'0534 111 22 33',email:'tem@koy.com',durum:'Aktif'},
 ];
 
-// ─────────────────────────────────────────
+// BAŞVURULAR (öğrenci tarafından yapılır)
+let basvurular=[
+  {id:1,ad:'Buse Koç',tc:'55556666777',tel:'0541 123 45 67',email:'buse@mail.com',tip:'3 Kişilik',tarih:'2025-08-10',durum:'Bekliyor',not:'',adim:1,mesaj:''},
+  {id:2,ad:'Ceren Yurt',tc:'66667778888',tel:'0542 123 45 67',email:'ceren@mail.com',tip:'1 Kişilik',tarih:'2025-08-09',durum:'Onaylandı',not:'',adim:3,mesaj:'Oda 102 yatak 2 tahsis edildi'},
+  {id:3,ad:'Dilek Mert',tc:'77778889999',tel:'0543 123 45 67',email:'dilek@mail.com',tip:'2 Kişilik',tarih:'2025-08-08',durum:'Reddedildi',not:'Kapasite dolu',adim:0,mesaj:''},
+  {id:4,ad:'Hülya Öztürk',tc:'88889990000',tel:'0544 123 45 67',email:'hulya@mail.com',tip:'4 Kişilik',tarih:'2025-08-11',durum:'İncelemede',not:'',adim:2,mesaj:''},
+];
+
+// FİNANS
+let finansKayitlar=[
+  {id:1,ogrId:1,ogrAd:'Ayşe Kaya',ay:'Eylül 2024',tutar:3500,odenen:3500,tarih:'2024-09-20',durum:'Ödendi'},
+  {id:2,ogrId:1,ogrAd:'Ayşe Kaya',ay:'Ekim 2024',tutar:3500,odenen:3500,tarih:'2024-10-20',durum:'Ödendi'},
+  {id:3,ogrId:1,ogrAd:'Ayşe Kaya',ay:'Kasım 2024',tutar:3500,odenen:1750,tarih:'2024-11-20',durum:'Kısmi'},
+  {id:4,ogrId:1,ogrAd:'Ayşe Kaya',ay:'Aralık 2024',tutar:3500,odenen:0,tarih:'',durum:'Bekliyor'},
+  {id:5,ogrId:2,ogrAd:'Fatma Demir',ay:'Eylül 2024',tutar:3500,odenen:3500,tarih:'2024-09-22',durum:'Ödendi'},
+  {id:6,ogrId:2,ogrAd:'Fatma Demir',ay:'Ekim 2024',tutar:3500,odenen:0,tarih:'',durum:'Bekliyor'},
+  {id:7,ogrId:3,ogrAd:'Zeynep Çelik',ay:'Eylül 2024',tutar:3500,odenen:3500,tarih:'2024-09-25',durum:'Ödendi'},
+];
+
+let arizalar=[
+  {id:1,oda:'205',yatak:null,konu:'Su tesisatı',aciklama:'Lavabo akıtıyor',tarih:'2025-08-12',durum:'Bekliyor',oncelik:'Yüksek'},
+  {id:2,oda:'301',yatak:null,konu:'Elektrik arızası',aciklama:'Priz çalışmıyor',tarih:'2025-08-11',durum:'İşlemde',oncelik:'Orta'},
+  {id:3,oda:'401',yatak:null,konu:'Klima arızası',aciklama:'Soğutmuyor',tarih:'2025-08-10',durum:'Tamamlandı',oncelik:'Düşük'},
+];
+let duyurular=[
+  {id:1,baslik:'Yeni Dönem Kaydı',tarih:'2025-08-01',icerik:'2025-2026 dönemi kayıtları başladı.'},
+  {id:2,baslik:'Su Bakım Çalışması',tarih:'2025-07-25',icerik:'15 Ağustos 09:00-12:00 su kesilecek.'},
+  {id:3,baslik:'İnternet Hızlandı',tarih:'2025-07-20',icerik:'Tüm katlarda internet altyapısı yenilendi.'},
+];
+let belgeler=[
+  {id:1,ogrAd:'Ayşe Kaya',ogrId:1,tip:'Öğrenci Belgesi',tarih:'2025-08-10',durum:'Hazır'},
+  {id:2,ogrAd:'Fatma Demir',ogrId:2,tip:'İkametgah',tarih:'2025-08-09',durum:'Bekliyor'},
+];
+// SMS/WA şablonları
+const MSG_TEMPLATES=[
+  {id:1,ad:'Başvuru Onay',kanal:'SMS+WA',icerik:'Sayın {ad}, yurt başvurunuz onaylanmıştır. Oda: {oda} Yatak: {yatak}. Detay için yönetimle iletişime geçiniz.'},
+  {id:2,ad:'Aidat Hatırlatma',kanal:'SMS+WA',icerik:'Sayın {ad}, {ay} dönemi yurt aidatınız ({tutar} ₺) henüz ödenmemiştir. Lütfen ödemenizi yapınız.'},
+  {id:3,ad:'Arıza Güncelleme',kanal:'WA',icerik:'Sayın {ad}, {oda} nolu odanıza ait arıza bildiriminiz işleme alınmıştır. Tahmini çözüm: 24 saat.'},
+  {id:4,ad:'Duyuru Bildirimi',kanal:'SMS+WA',icerik:'Korkmazlar Yurt: {baslik} — {icerik}'},
+];
+
+// ══════════════════════════════════════
 // AUTH
-// ─────────────────────────────────────────
-let currentRole='ogrenci', loginRole='ogrenci';
+// ══════════════════════════════════════
+let currentRole=null, loginRoleKey='mudur';
 
-function setRole(r){
-  loginRole=r;
-  document.querySelectorAll('.role-tab').forEach((t,i)=>t.classList.toggle('active',['ogrenci','personel','admin'][i]===r));
+function buildLoginUI(){
+  const roleGrid=document.getElementById('roleGrid');
+  roleGrid.innerHTML=Object.entries(ROLES).map(([k,v])=>`
+    <div class="role-card ${k==='mudur'?'active':''}" onclick="setRole('${k}')" data-role="${k}">
+      <span class="rc-icon">${v.icon}</span>${v.name}<div class="rc-sub">${v.sub}</div>
+    </div>`).join('');
+  updateDemoHint('mudur');
+}
+function setRole(k){
+  loginRoleKey=k;
+  document.querySelectorAll('.role-card').forEach(c=>c.classList.toggle('active',c.dataset.role===k));
+  updateDemoHint(k);
+}
+function updateDemoHint(k){
+  const r=ROLES[k];
+  document.getElementById('loginDemo').innerHTML=`Demo: <b>${k}</b> / <b>${r.pass}</b>`;
 }
 function doLogin(){
   const u=document.getElementById('loginUser').value.trim();
   const p=document.getElementById('loginPass').value.trim();
-  if(!((u==='admin'&&p==='admin'&&loginRole==='admin')||(u==='personel'&&p==='1234'&&loginRole==='personel')||(u==='ogrenci'&&p==='1234'&&loginRole==='ogrenci'))){
-    alert('Kullanıcı adı veya şifre hatalı!'); return;
-  }
-  currentRole=loginRole;
-  const cfg=ROLES_CFG[currentRole];
-  document.getElementById('navRoleLabel').textContent='— '+cfg.label;
-  document.getElementById('navAvatar').textContent=cfg.initials;
-  document.getElementById('navName').textContent=cfg.name;
-  document.getElementById('navRole').textContent=cfg.role;
-  buildNav(cfg.nav);
+  const r=ROLES[loginRoleKey];
+  if(u!==loginRoleKey||p!==r.pass){alert('Kullanıcı adı veya şifre hatalı!');return;}
+  currentRole=loginRoleKey;
+  document.getElementById('navRoleLabel').textContent='— '+r.label;
+  document.getElementById('navAv').textContent=r.initials;
+  document.getElementById('navName').textContent=r.name;
+  document.getElementById('navRole').textContent={mudur:'Tam Yetki',operasyon:'Operasyon',muhasebe:'Muhasebe',ogrenci:'Öğrenci'}[currentRole];
+  buildNav(r.nav);
   document.getElementById('loginScreen').classList.remove('active');
   document.getElementById('mainApp').classList.add('active');
-  navigate(cfg.nav[0]);
+  navigate(r.nav[0]);
 }
 function doLogout(){
+  currentRole=null;
   document.getElementById('mainApp').classList.remove('active');
   document.getElementById('loginScreen').classList.add('active');
   document.getElementById('loginUser').value='';
   document.getElementById('loginPass').value='';
 }
-document.addEventListener('keydown',e=>{
-  if(e.key==='Enter'&&document.getElementById('loginScreen').classList.contains('active')) doLogin();
-});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.getElementById('loginScreen').classList.contains('active'))doLogin();});
 
-// ─────────────────────────────────────────
+// ══════════════════════════════════════
 // NAV
-// ─────────────────────────────────────────
+// ══════════════════════════════════════
 function buildNav(pages){
-  const c=document.getElementById('navTabs');
-  c.innerHTML=pages.map(p=>{const[ic,lb]=NAV_MAP[p]||['·',p];return`<button class="topnav-tab" data-page="${p}" onclick="navigate('${p}')">${ic} ${lb}</button>`;}).join('');
+  document.getElementById('navTabs').innerHTML=pages.map(p=>`
+    <button class="tn-tab" data-page="${p}" onclick="navigate('${p}')">${NAV_MAP[p]||p}</button>`).join('');
 }
 function navigate(page){
-  document.querySelectorAll('.topnav-tab').forEach(t=>t.classList.toggle('active',t.dataset.page===page));
+  document.querySelectorAll('.tn-tab').forEach(t=>t.classList.toggle('active',t.dataset.page===page));
   setHeader('','','');
-  renderPage(page);
-}
-function setHeader(title,desc,actions=''){
-  document.getElementById('pageTitle').textContent=title;
-  document.getElementById('pageDesc').textContent=desc;
-  document.getElementById('pageActions').innerHTML=actions;
-}
-
-// ─────────────────────────────────────────
-// ROUTER
-// ─────────────────────────────────────────
-function renderPage(page){
-  const b=document.getElementById('pageBody');b.innerHTML='';
+  document.getElementById('pageBody').innerHTML='';
   ({dashboard,odalar,ogrenciler:pgOgrenciler,personel:pgPersonel,basvurular:pgBasvurular,
-    arizalar:pgArizalar,duyurular:pgDuyurular,belgeler:pgBelgeler,
-    personelHome,ogrenciHome,arizaBildir,belgeTalep,duyurularGor}[page]||(()=>{b.innerHTML='<div class="empty-state">Sayfa bulunamadı.</div>';}))(b);
+    finans:pgFinans,arizalar:pgArizalar,duyurular:pgDuyurular,belgeler:pgBelgeler,
+    mesajlar:pgMesajlar,ogrenciHome,basvuruYap,arizaBildir,belgeTalep,duyurularGor}[page]
+    ||(()=>{document.getElementById('pageBody').innerHTML='<div class="empty-state"><div class="empty-icon">🔍</div>Sayfa bulunamadı.</div>';}))
+    (document.getElementById('pageBody'));
+}
+function setHeader(t,d,a=''){
+  document.getElementById('pageTitle').textContent=t;
+  document.getElementById('pageDesc').textContent=d;
+  document.getElementById('pageActions').innerHTML=a;
 }
 
-// ─────────────────────────────────────────
+// ══════════════════════════════════════
 // DASHBOARD
-// ─────────────────────────────────────────
+// ══════════════════════════════════════
 function dashboard(b){
   setHeader('Dashboard','Genel bakış ve istatistikler');
   const aktif=ogrenciler.filter(o=>o.durum==='Aktif').length;
+  const bekBas=basvurular.filter(x=>x.durum==='Bekliyor'||x.durum==='İncelemede').length;
   const bekAriza=arizalar.filter(a=>a.durum!=='Tamamlandı').length;
-  const bos=174-aktif;
-  const dolulukPct=Math.round(aktif/174*100);
+  // yatak sayımı
+  let toplamYatak=0,doluYatak=0,bos=0;
+  TUM_ODALAR.forEach(o=>{BEDS[o].forEach(bed=>{toplamYatak++;if(bed.durum==='occupied')doluYatak++;if(bed.durum==='empty')bos++;})});
+  const doluluk=Math.round(doluYatak/toplamYatak*100);
+  // aylık tahsilat
+  const tahsilat=finansKayitlar.filter(f=>f.durum==='Ödendi').reduce((s,f)=>s+f.odenen,0);
+  const beklenTahsilat=finansKayitlar.filter(f=>f.durum!=='Ödendi').reduce((s,f)=>s+(f.tutar-f.odenen),0);
 
-  // Kat doluluk verileri
-  const katData = KATS.filter(k=>k.odalar.length>2).map(k=>{
-    const tamOda=k.odalar.filter(o=>odaDurum[o]==='tam').length;
-    const pct=Math.round(tamOda/k.odalar.length*100);
-    return {ad:k.kisa, pct};
-  });
+  // rol bazlı kart seçimi
+  const isOps=currentRole==='operasyon', isMuh=currentRole==='muhasebe';
 
   b.innerHTML=`
-  <div class="stats-grid">
-    <div class="stat-card green">
-      <div class="stat-label">Toplam Kapasite</div>
-      <div class="stat-value">174</div>
-      <div class="stat-sub">60 oda · 8 kat</div>
-    </div>
-    <div class="stat-card blue">
-      <div class="stat-label">Aktif Öğrenci</div>
-      <div class="stat-value">${aktif}</div>
-      <div class="stat-sub">%${dolulukPct} doluluk</div>
-    </div>
-    <div class="stat-card amber">
-      <div class="stat-label">Boş Yatak</div>
-      <div class="stat-value">${bos}</div>
-      <div class="stat-sub">%${100-dolulukPct} müsait</div>
-    </div>
-    <div class="stat-card red">
-      <div class="stat-label">Bekleyen Arıza</div>
-      <div class="stat-value">${bekAriza}</div>
-      <div class="stat-sub">aktif bildirim</div>
-    </div>
+  <div class="stats-4">
+    <div class="stat-card sc-blue"><div class="stat-label">Toplam Yatak</div><div class="stat-value">${toplamYatak}</div><div class="stat-sub">60 oda · 8 kat</div></div>
+    <div class="stat-card sc-green"><div class="stat-label">Dolu Yatak</div><div class="stat-value">${doluYatak}</div><div class="stat-sub">%${doluluk} doluluk</div></div>
+    <div class="stat-card sc-amber"><div class="stat-label">Boş Yatak</div><div class="stat-value">${bos}</div><div class="stat-sub">%${100-doluluk} müsait</div></div>
+    ${isMuh
+      ?`<div class="stat-card sc-purple"><div class="stat-label">Bekl. Tahsilat</div><div class="stat-value">${(beklenTahsilat/1000).toFixed(1)}K</div><div class="stat-sub">₺ alacak</div></div>`
+      :`<div class="stat-card sc-red"><div class="stat-label">Bekl. Arıza</div><div class="stat-value">${bekAriza}</div><div class="stat-sub">açık bildirim</div></div>`}
   </div>
 
-  <div class="grid-2">
+  <div class="g2">
+    <!-- Doluluk Grafiği -->
     <div class="card">
       <div class="card-body">
-        <div class="card-title">📊 Kat Bazında Doluluk</div>
-        ${katData.map(k=>`
-        <div class="progress-row">
-          <div class="progress-label">${k.ad}</div>
-          <div class="progress-bar"><div class="progress-fill" style="width:${k.pct}%"></div></div>
-          <div class="progress-pct">%${k.pct}</div>
-        </div>`).join('')}
+        <div class="card-title">📊 Kat Bazlı Yatak Doluluk</div>
+        ${KATS.filter(k=>k.odalar.length>2).map(k=>{
+          let tot=0,dol=0;
+          k.odalar.forEach(o=>BEDS[o].forEach(bed=>{tot++;if(bed.durum==='occupied')dol++;}));
+          const pct=tot?Math.round(dol/tot*100):0;
+          return `<div class="prog-row">
+            <div class="prog-lbl">${k.ad}</div>
+            <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
+            <div class="prog-pct">%${pct}</div>
+          </div>`;
+        }).join('')}
       </div>
     </div>
+
+    <!-- Oda Tipi -->
     <div class="card">
       <div class="card-body">
-        <div class="card-title">🏠 Oda Tipi Dağılımı</div>
-        ${[['1 Kişilik',12,'#16a34a'],['2 Kişilik',6,'#2563eb'],['3 Kişilik',18,'#d97706'],['4 Kişilik',24,'#dc2626']].map(([t,n,c])=>`
-        <div class="progress-row">
-          <div class="progress-label" style="display:flex;align-items:center;gap:6px">
-            <span style="width:8px;height:8px;background:${c};border-radius:2px;display:inline-block;flex-shrink:0"></span>
-            ${t}
+        <div class="card-title">🏠 Oda & Yatak Özeti</div>
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:12px">
+          <div style="text-align:center">
+            <div style="font-size:28px;font-weight:700;color:var(--p)">${doluluk}%</div>
+            <div style="font-size:11px;color:var(--muted)">Doluluk</div>
           </div>
-          <div class="progress-bar"><div class="progress-fill" style="width:${Math.round(n/60*100)}%;background:${c}"></div></div>
-          <div class="progress-pct">${n}</div>
-        </div>`).join('')}
+          <div style="flex:1">
+            ${[['1K',12,'#16a34a'],['2K',6,'#2563eb'],['3K',18,'#d97706'],['4K',24,'#dc2626']].map(([t,n,c])=>`
+            <div class="prog-row" style="margin-bottom:5px">
+              <div class="prog-lbl" style="display:flex;align-items:center;gap:5px">
+                <span style="width:8px;height:8px;background:${c};border-radius:2px;display:inline-block"></span>${t}
+              </div>
+              <div class="prog-bar"><div class="prog-fill" style="width:${Math.round(n/60*100)}%;background:${c}"></div></div>
+              <div class="prog-pct">${n}</div>
+            </div>`).join('')}
+          </div>
+        </div>
+        <div class="legend">
+          <div class="leg-item"><div class="leg-dot" style="background:#fff;border-color:var(--border)"></div>Boş</div>
+          <div class="leg-item"><div class="leg-dot" style="background:var(--rbg);border-color:#fca5a5"></div>Dolu</div>
+          <div class="leg-item"><div class="leg-dot" style="background:var(--abg);border-color:#fcd34d"></div>Rezerve</div>
+          <div class="leg-item"><div class="leg-dot" style="background:var(--bbg);border-color:#93c5fd"></div>Bakım</div>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="grid-2">
+  <div class="g2">
+    <!-- Son Başvurular -->
     <div class="card">
       <div class="action-bar">
-        <div class="action-bar-title">📋 Son Başvurular</div>
-        <button class="btn btn-secondary btn-sm" onclick="navigate('basvurular')">Tümü →</button>
+        <div class="action-bar-title">📋 Son Başvurular <span class="badge bg-amber" style="margin-left:6px">${bekBas} bekliyor</span></div>
+        ${currentRole!=='muhasebe'?`<button class="btn btn-secondary btn-sm" onclick="navigate('basvurular')">Tümü →</button>`:''}
       </div>
-      <div class="table-wrap">
+      <div class="tbl-wrap">
       <table>
-        <thead><tr><th>Ad Soyad</th><th>Tip</th><th>Tarih</th><th>Durum</th></tr></thead>
+        <thead><tr><th>Ad Soyad</th><th>Tip</th><th>Durum</th></tr></thead>
         <tbody>
-        ${basvurular.slice(0,4).map(bv=>`<tr>
+        ${basvurular.slice(0,5).map(bv=>`<tr>
           <td class="td-name">${bv.ad}</td>
-          <td><span class="badge badge-gray">${bv.tip}</span></td>
-          <td class="td-muted">${bv.tarih}</td>
-          <td><span class="badge ${bv.durum==='Onaylandı'?'badge-green':bv.durum==='Bekliyor'?'badge-amber':'badge-red'}">${bv.durum}</span></td>
+          <td><span class="badge bg-gray">${bv.tip}</span></td>
+          <td><span class="badge ${bv.durum==='Onaylandı'?'bg-green':bv.durum==='Bekliyor'?'bg-amber':bv.durum==='İncelemede'?'bg-blue':'bg-red'}">${bv.durum}</span></td>
         </tr>`).join('')}
         </tbody>
       </table>
       </div>
     </div>
+
+    <!-- Finans Özet -->
     <div class="card">
       <div class="action-bar">
-        <div class="action-bar-title">🔧 Son Arızalar</div>
+        <div class="action-bar-title">💰 Tahsilat Özeti</div>
+        ${currentRole==='muhasebe'||currentRole==='mudur'?`<button class="btn btn-secondary btn-sm" onclick="navigate('finans')">Detay →</button>`:''}
+      </div>
+      <div class="card-body" style="padding-top:12px">
+        <div class="stats-3" style="gap:8px;margin-bottom:12px">
+          <div class="stat-card sc-green" style="padding:10px 12px">
+            <div class="stat-label">Tahsil</div>
+            <div class="stat-value" style="font-size:18px">${(tahsilat/1000).toFixed(1)}K</div>
+            <div class="stat-sub">₺</div>
+          </div>
+          <div class="stat-card sc-red" style="padding:10px 12px">
+            <div class="stat-label">Alacak</div>
+            <div class="stat-value" style="font-size:18px">${(beklenTahsilat/1000).toFixed(1)}K</div>
+            <div class="stat-sub">₺</div>
+          </div>
+          <div class="stat-card" style="padding:10px 12px">
+            <div class="stat-label">Toplam</div>
+            <div class="stat-value" style="font-size:18px">${((tahsilat+beklenTahsilat)/1000).toFixed(1)}K</div>
+            <div class="stat-sub">₺</div>
+          </div>
+        </div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:6px;font-weight:600">Aylık Tahsilat (₺)</div>
+        <div class="chart-bars">
+          ${['Eyl','Eki','Kas','Ara'].map((ay,i)=>{
+            const vals=[14000,14000,8750,0];
+            const max=14000;
+            const h=max>0?Math.round((vals[i]/max)*70):0;
+            return `<div class="chart-bar-wrap">
+              <div class="chart-bar-val">${vals[i]>0?(vals[i]/1000).toFixed(0)+'K':'-'}</div>
+              <div class="chart-bar" style="height:${h}px;background:${vals[i]===max?'var(--green)':vals[i]>0?'var(--p)':'var(--border)'}"></div>
+              <div class="chart-bar-lbl">${ay}</div>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Son Arızalar + Duyurular -->
+  <div class="g2">
+    <div class="card">
+      <div class="action-bar"><div class="action-bar-title">🔧 Son Arızalar</div>
         <button class="btn btn-secondary btn-sm" onclick="navigate('arizalar')">Tümü →</button>
       </div>
       ${arizalar.slice(0,4).map(a=>`
       <div class="ariza-item">
-        <div class="ariza-icon ${a.oncelik==='Yüksek'?'urgent':a.durum==='Tamamlandı'?'done':'normal'}">
+        <div class="ariza-icon ${a.oncelik==='Yüksek'?'ai-urgent':a.durum==='Tamamlandı'?'ai-done':'ai-normal'}">
           ${a.oncelik==='Yüksek'?'⚠️':a.durum==='Tamamlandı'?'✅':'🔧'}
         </div>
-        <div style="flex:1;min-width:0">
-          <div class="ariza-title">${a.konu}</div>
-          <div class="ariza-meta">Oda ${a.oda} · ${a.tarih}</div>
-        </div>
-        <span class="badge ${a.durum==='Tamamlandı'?'badge-green':a.durum==='İşlemde'?'badge-blue':'badge-amber'}">${a.durum}</span>
+        <div style="flex:1"><div class="ariza-title">${a.konu}</div><div class="ariza-meta">Oda ${a.oda} · ${a.tarih}</div></div>
+        <span class="badge ${a.durum==='Tamamlandı'?'bg-green':a.durum==='İşlemde'?'bg-blue':'bg-amber'}">${a.durum}</span>
+      </div>`).join('')}
+    </div>
+    <div class="card">
+      <div class="action-bar"><div class="action-bar-title">📢 Duyurular</div></div>
+      ${duyurular.slice(0,3).map(d=>`
+      <div class="duyuru-item">
+        <div class="duyuru-title">${d.baslik}</div>
+        <div class="duyuru-date">📅 ${d.tarih}</div>
+        <div class="duyuru-body">${d.icerik}</div>
       </div>`).join('')}
     </div>
   </div>`;
 }
 
-// ─────────────────────────────────────────
-// ODA PLANI
-// ─────────────────────────────────────────
-let activeFloorIdx=0;
+// ══════════════════════════════════════
+// ODA / YATAK YÖNETİMİ
+// ══════════════════════════════════════
+let activeKatIdx=0;
 function odalar(b){
-  setHeader('Oda Planı','Kat ve oda doluluk durumu',
-    `<button class="btn btn-primary" onclick="openOdaGuncelle()">✏️ Oda Güncelle</button>`);
+  setHeader('Oda & Yatak Planı','Yatak bazlı doluluk yönetimi',
+    `<button class="btn btn-primary" onclick="openTopluGuncelle()">✏️ Toplu Güncelle</button>`);
   renderOdalar(b);
 }
 function renderOdalar(b){
-  const bosC=TUM_ODALAR.filter(o=>odaDurum[o]==='bos').length;
-  const tamC=TUM_ODALAR.filter(o=>odaDurum[o]==='tam').length;
-  const kismC=TUM_ODALAR.filter(o=>odaDurum[o]==='kism').length;
-  const bakimC=TUM_ODALAR.filter(o=>odaDurum[o]==='bakim').length;
+  let totYatak=0,dolYatak=0,bosYatak=0,bakYatak=0,rezYatak=0;
+  TUM_ODALAR.forEach(o=>BEDS[o].forEach(bed=>{
+    totYatak++;
+    if(bed.durum==='occupied')dolYatak++;
+    else if(bed.durum==='empty')bosYatak++;
+    else if(bed.durum==='maintenance')bakYatak++;
+    else if(bed.durum==='reserved')rezYatak++;
+  }));
+  const kat=KATS[activeKatIdx];
   b.innerHTML=`
-  <div class="stats-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:16px">
-    <div class="stat-card"><div class="stat-label">Boş Oda</div><div class="stat-value" style="color:var(--txt)">${bosC}</div><div class="stat-sub">oda</div></div>
-    <div class="stat-card green"><div class="stat-label">Kısmi Dolu</div><div class="stat-value">${kismC}</div><div class="stat-sub">oda</div></div>
-    <div class="stat-card red"><div class="stat-label">Tam Dolu</div><div class="stat-value">${tamC}</div><div class="stat-sub">oda</div></div>
-    <div class="stat-card blue"><div class="stat-label">Bakımda</div><div class="stat-value">${bakimC}</div><div class="stat-sub">oda</div></div>
+  <div class="stats-4">
+    <div class="stat-card"><div class="stat-label">Toplam Yatak</div><div class="stat-value" style="color:var(--txt)">${totYatak}</div></div>
+    <div class="stat-card sc-red"><div class="stat-label">Dolu</div><div class="stat-value">${dolYatak}</div></div>
+    <div class="stat-card sc-green"><div class="stat-label">Boş</div><div class="stat-value">${bosYatak}</div></div>
+    <div class="stat-card sc-amber"><div class="stat-label">Rezerve</div><div class="stat-value">${rezYatak}</div></div>
   </div>
-
-  <div class="card">
+  <div class="card" style="margin-bottom:14px">
     <div class="card-body">
       <div class="floor-tabs">
-        ${KATS.map((k,i)=>`<button class="floor-tab ${i===activeFloorIdx?'active':''}" onclick="switchFloor(${i})">${k.kisa}</button>`).join('')}
+        ${KATS.map((k,i)=>`<button class="floor-tab ${i===activeKatIdx?'active':''}" onclick="switchKat(${i})">${k.ad}</button>`).join('')}
       </div>
       <div class="legend">
         <div class="leg-item"><div class="leg-dot" style="background:#fff;border-color:var(--border)"></div>Boş</div>
-        <div class="leg-item"><div class="leg-dot" style="background:var(--green-bg);border-color:#86efac"></div>Kısmi Dolu</div>
-        <div class="leg-item"><div class="leg-dot" style="background:var(--red-bg);border-color:#fca5a5"></div>Tam Dolu</div>
-        <div class="leg-item"><div class="leg-dot" style="background:var(--blue-bg);border-color:#93c5fd"></div>Bakımda</div>
+        <div class="leg-item"><div class="leg-dot" style="background:var(--rbg);border-color:#fca5a5"></div>Dolu</div>
+        <div class="leg-item"><div class="leg-dot" style="background:var(--abg);border-color:#fcd34d"></div>Rezerve</div>
+        <div class="leg-item"><div class="leg-dot" style="background:var(--bbg);border-color:#93c5fd"></div>Bakım</div>
       </div>
-      <div id="floorOdalar">
-        ${renderKatOdalar(KATS[activeFloorIdx])}
-      </div>
+      <div id="katOdalar">${renderKatOdalar(kat)}</div>
     </div>
   </div>`;
 }
 function renderKatOdalar(kat){
-  return`<div class="kat-section">
-    <div class="kat-header">${kat.ad} — ${kat.odalar.length} oda</div>
-    <div class="oda-grid">
-      ${kat.odalar.map(o=>{
-        const d=odaDurum[o];
-        const cls=d==='bos'?'bos':d==='tam'?'tam':d==='kism'?'kism':'bakim';
-        return`<button class="oda-cell ${cls}" onclick="openOdaDetay('${o}')">
-          <span class="oda-no">${o}</span>
-          <span class="oda-tip">${odaTip(o)}K</span>
-        </button>`;
-      }).join('')}
-    </div>
-  </div>`;
+  return kat.odalar.map(oda=>{
+    const beds=BEDS[oda];
+    const kap=odaKapasite(oda);
+    const dolBed=beds.filter(b=>b.durum==='occupied').length;
+    return `
+    <div class="room-card">
+      <div class="room-header">
+        <div><span class="room-no">Oda ${oda}</span> <span class="room-type">${kap} Kişilik</span></div>
+        <span class="badge ${dolBed===0?'bg-gray':dolBed===kap?'bg-red':'bg-amber'}">${dolBed}/${kap} dolu</span>
+      </div>
+      <div class="bed-list">
+        ${beds.map(bed=>{
+          const ogr=bed.ogrenci_id?ogrenciler.find(o=>o.id===bed.ogrenci_id):null;
+          return `<div class="bed-item ${bed.durum}" onclick="openBedDetay('${oda}',${bed.no})">
+            <span class="bed-no">Yatak ${bed.no}</span>
+            <span class="bed-name">${ogr?ogr.ad:bed.durum==='empty'?'Boş':bed.durum==='reserved'?'Rezerve':'Bakım'}</span>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  }).join('');
 }
-function switchFloor(idx){
-  activeFloorIdx=idx;
+function switchKat(idx){
+  activeKatIdx=idx;
   document.querySelectorAll('.floor-tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
-  document.getElementById('floorOdalar').innerHTML=renderKatOdalar(KATS[idx]);
+  document.getElementById('katOdalar').innerHTML=renderKatOdalar(KATS[idx]);
 }
-function openOdaDetay(oda){
-  const d=odaDurum[oda], tip=odaTip(oda);
+function openBedDetay(oda,bedNo){
+  const bed=BEDS[oda].find(b=>b.no===bedNo);
+  const ogr=bed.ogrenci_id?ogrenciler.find(o=>o.id===bed.ogrenci_id):null;
   openModal(`
-    <div class="modal-header">
-      <h3>🚪 Oda ${oda}</h3>
-      <button class="modal-close" onclick="closeModal()">✕</button>
-    </div>
+    <div class="modal-hdr"><h3>🛏️ Oda ${oda} — Yatak ${bedNo}</h3><button class="modal-x" onclick="closeModal()">✕</button></div>
     <div class="modal-body">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px;background:var(--bg);border-radius:var(--radius-md);border:1px solid var(--border)">
-        <div><div style="font-size:11px;color:var(--txt-muted);margin-bottom:3px">Oda Tipi</div><div style="font-weight:700">${tip} Kişilik</div></div>
-        <div><div style="font-size:11px;color:var(--txt-muted);margin-bottom:3px">Kapasite</div><div style="font-weight:700">${tip} kişi</div></div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Durum</label>
-        <select class="form-control" id="odaDurumSel">
-          <option value="bos" ${d==='bos'?'selected':''}>Boş</option>
-          <option value="kism" ${d==='kism'?'selected':''}>Kısmi Dolu</option>
-          <option value="tam" ${d==='tam'?'selected':''}>Tam Dolu</option>
-          <option value="bakim" ${d==='bakim'?'selected':''}>Bakımda</option>
+      <div class="form-group"><label>Durum</label>
+        <select class="form-control" id="bedDurum">
+          <option value="empty" ${bed.durum==='empty'?'selected':''}>Boş</option>
+          <option value="occupied" ${bed.durum==='occupied'?'selected':''}>Dolu</option>
+          <option value="reserved" ${bed.durum==='reserved'?'selected':''}>Rezerve</option>
+          <option value="maintenance" ${bed.durum==='maintenance'?'selected':''}>Bakım</option>
         </select>
       </div>
-      <div class="form-group">
-        <label class="form-label">Not (isteğe bağlı)</label>
-        <input type="text" class="form-control" placeholder="Oda notu...">
+      <div class="form-group"><label>Öğrenci (Dolu ise)</label>
+        <select class="form-control" id="bedOgr">
+          <option value="">— Seçiniz —</option>
+          ${ogrenciler.map(o=>`<option value="${o.id}" ${bed.ogrenci_id===o.id?'selected':''}>${o.ad}</option>`).join('')}
+        </select>
       </div>
+      <div class="form-group"><label>Not</label><input class="form-control" placeholder="İsteğe bağlı not..."></div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-secondary" onclick="closeModal()">İptal</button>
-      <button class="btn btn-primary" onclick="saveOdaDetay('${oda}')">Kaydet</button>
+      <button class="btn btn-primary" onclick="saveBed('${oda}',${bedNo})">Kaydet</button>
     </div>`);
 }
-function saveOdaDetay(oda){
-  odaDurum[oda]=document.getElementById('odaDurumSel').value;
+function saveBed(oda,bedNo){
+  const bed=BEDS[oda].find(b=>b.no===bedNo);
+  bed.durum=document.getElementById('bedDurum').value;
+  const ogrId=parseInt(document.getElementById('bedOgr').value);
+  bed.ogrenci_id=ogrId||null;
   closeModal();
   renderOdalar(document.getElementById('pageBody'));
 }
-function openOdaGuncelle(){
+function openTopluGuncelle(){
   openModal(`
-    <div class="modal-header">
-      <h3>✏️ Oda Güncelle</h3>
-      <button class="modal-close" onclick="closeModal()">✕</button>
-    </div>
+    <div class="modal-hdr"><h3>✏️ Toplu Oda Güncelle</h3><button class="modal-x" onclick="closeModal()">✕</button></div>
     <div class="modal-body">
-      <div class="form-group">
-        <label class="form-label">Oda No</label>
-        <select class="form-control" id="odaNoSel">
-          ${TUM_ODALAR.map(o=>`<option value="${o}">${o} — ${odaTip(o)} Kişilik</option>`).join('')}
-        </select>
+      <div class="form-group"><label>Oda</label>
+        <select class="form-control" id="tg_oda">${TUM_ODALAR.map(o=>`<option value="${o}">${o} — ${odaKapasite(o)} Kişilik</option>`).join('')}</select>
       </div>
-      <div class="form-group">
-        <label class="form-label">Yeni Durum</label>
-        <select class="form-control" id="odaDurumSel2">
-          <option value="bos">Boş</option>
-          <option value="kism">Kısmi Dolu</option>
-          <option value="tam">Tam Dolu</option>
-          <option value="bakim">Bakımda</option>
+      <div class="form-group"><label>Yatak No</label>
+        <select class="form-control" id="tg_bed"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select>
+      </div>
+      <div class="form-group"><label>Durum</label>
+        <select class="form-control" id="tg_durum">
+          <option value="empty">Boş</option><option value="occupied">Dolu</option>
+          <option value="reserved">Rezerve</option><option value="maintenance">Bakım</option>
         </select>
       </div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-secondary" onclick="closeModal()">İptal</button>
-      <button class="btn btn-primary" onclick="saveOdaGuncelle()">Güncelle</button>
+      <button class="btn btn-primary" onclick="saveToplu()">Güncelle</button>
     </div>`);
 }
-function saveOdaGuncelle(){
-  odaDurum[document.getElementById('odaNoSel').value]=document.getElementById('odaDurumSel2').value;
-  closeModal();
-  renderOdalar(document.getElementById('pageBody'));
+function saveToplu(){
+  const oda=document.getElementById('tg_oda').value;
+  const no=parseInt(document.getElementById('tg_bed').value);
+  const d=document.getElementById('tg_durum').value;
+  const bed=BEDS[oda]?.find(b=>b.no===no);
+  if(bed){bed.durum=d;if(d!=='occupied')bed.ogrenci_id=null;}
+  closeModal(); renderOdalar(document.getElementById('pageBody'));
 }
 
-// ─────────────────────────────────────────
+// ══════════════════════════════════════
 // ÖĞRENCİLER
-// ─────────────────────────────────────────
+// ══════════════════════════════════════
 function pgOgrenciler(b){
   setHeader('Öğrenciler',`${ogrenciler.length} kayıtlı öğrenci`,
-    `<button class="btn btn-primary" onclick="openOgrenciEkle()">+ Öğrenci Ekle</button>`);
-  const aktif=ogrenciler.filter(o=>o.durum==='Aktif').length;
+    `<button class="btn btn-primary" onclick="openOgrEkle()">+ Öğrenci Ekle</button>`);
   b.innerHTML=`
-  <div class="stats-grid">
-    <div class="stat-card green"><div class="stat-label">Aktif</div><div class="stat-value">${aktif}</div><div class="stat-sub">öğrenci</div></div>
-    <div class="stat-card amber"><div class="stat-label">Pasif</div><div class="stat-value">${ogrenciler.length-aktif}</div><div class="stat-sub">öğrenci</div></div>
-    <div class="stat-card blue"><div class="stat-label">1 Kişilik</div><div class="stat-value">12</div><div class="stat-sub">oda</div></div>
-    <div class="stat-card red"><div class="stat-label">4 Kişilik</div><div class="stat-value">24</div><div class="stat-sub">oda</div></div>
+  <div class="stats-4">
+    <div class="stat-card sc-green"><div class="stat-label">Aktif</div><div class="stat-value">${ogrenciler.filter(o=>o.durum==='Aktif').length}</div></div>
+    <div class="stat-card sc-amber"><div class="stat-label">Pasif</div><div class="stat-value">${ogrenciler.filter(o=>o.durum==='Pasif').length}</div></div>
+    <div class="stat-card sc-blue"><div class="stat-label">Yerleştirildi</div><div class="stat-value">${ogrenciler.filter(o=>o.oda).length}</div></div>
+    <div class="stat-card sc-red"><div class="stat-label">Yerleştirilmedi</div><div class="stat-value">${ogrenciler.filter(o=>!o.oda).length}</div></div>
   </div>
   <div class="card">
-    <div class="table-wrap">
-    <table>
-      <thead><tr><th>#</th><th>Ad Soyad</th><th>TC No</th><th>Oda</th><th>Tip</th><th>Telefon</th><th>Durum</th><th></th></tr></thead>
-      <tbody>
-      ${ogrenciler.map((o,i)=>`<tr>
-        <td class="td-muted">${i+1}</td>
-        <td class="td-name">${o.ad}</td>
-        <td class="td-muted">${o.tc}</td>
-        <td><span class="badge badge-primary">${o.oda}</span></td>
-        <td class="td-muted">${odaTip(o.oda)}K</td>
-        <td class="td-muted">${o.tel}</td>
-        <td><span class="badge ${o.durum==='Aktif'?'badge-green':'badge-gray'}">${o.durum}</span></td>
-        <td style="display:flex;gap:6px">
-          <button class="btn btn-secondary btn-xs" onclick="openOgrenciDuzenle(${o.id})">✏️</button>
-          <button class="btn btn-danger btn-xs" onclick="silOgrenci(${o.id})">🗑️</button>
-        </td>
-      </tr>`).join('')}
-      </tbody>
-    </table>
-    </div>
-  </div>`;
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>#</th><th>Ad Soyad</th><th>TC No</th><th>Oda</th><th>Yatak</th><th>Telefon</th><th>Durum</th><th></th></tr></thead>
+    <tbody>
+    ${ogrenciler.map((o,i)=>`<tr>
+      <td class="td-muted">${i+1}</td>
+      <td class="td-name">${o.ad}</td>
+      <td class="td-muted">${o.tc}</td>
+      <td>${o.oda?`<span class="badge bg-primary">${o.oda}</span>`:'—'}</td>
+      <td>${o.yatak?`#${o.yatak}`:'—'}</td>
+      <td class="td-muted">${o.tel}</td>
+      <td><span class="badge ${o.durum==='Aktif'?'bg-green':'bg-gray'}">${o.durum}</span></td>
+      <td style="display:flex;gap:5px">
+        <button class="btn btn-secondary btn-xs" onclick="openOgrDuzenle(${o.id})">✏️</button>
+        <button class="btn btn-danger btn-xs" onclick="silOgr(${o.id})">🗑️</button>
+      </td>
+    </tr>`).join('')}
+    </tbody>
+  </table></div></div>`;
 }
-function openOgrenciEkle(){
+function openOgrEkle(){
   openModal(`
-    <div class="modal-header"><h3>👩 Öğrenci Ekle</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <div class="modal-hdr"><h3>👩 Öğrenci Ekle</h3><button class="modal-x" onclick="closeModal()">✕</button></div>
     <div class="modal-body">
       <div class="form-row">
-        <div class="form-group"><label class="form-label">Ad Soyad</label><input class="form-control" id="og_ad" placeholder="Ad Soyad"></div>
-        <div class="form-group"><label class="form-label">TC Kimlik No</label><input class="form-control" id="og_tc" placeholder="11 haneli TC"></div>
+        <div class="form-group"><label>Ad Soyad</label><input class="form-control" id="oa_ad" placeholder="Ad Soyad"></div>
+        <div class="form-group"><label>TC</label><input class="form-control" id="oa_tc" placeholder="TC Kimlik"></div>
       </div>
       <div class="form-row">
-        <div class="form-group"><label class="form-label">Telefon</label><input class="form-control" id="og_tel" placeholder="05xx..."></div>
-        <div class="form-group"><label class="form-label">E-posta</label><input class="form-control" id="og_mail" type="email" placeholder="@mail.com"></div>
+        <div class="form-group"><label>Telefon</label><input class="form-control" id="oa_tel" placeholder="05xx..."></div>
+        <div class="form-group"><label>E-posta</label><input class="form-control" id="oa_mail" placeholder="@mail.com"></div>
       </div>
-      <div class="form-group"><label class="form-label">Oda</label>
-        <select class="form-control" id="og_oda">${TUM_ODALAR.map(o=>`<option value="${o}">${o} — ${odaTip(o)} Kişilik</option>`).join('')}</select>
+      <div class="form-row">
+        <div class="form-group"><label>Oda</label>
+          <select class="form-control" id="oa_oda"><option value="">— Seçiniz —</option>${TUM_ODALAR.map(o=>`<option value="${o}">${o}</option>`).join('')}</select>
+        </div>
+        <div class="form-group"><label>Yatak No</label>
+          <select class="form-control" id="oa_yatak"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option></select>
+        </div>
       </div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-secondary" onclick="closeModal()">İptal</button>
-      <button class="btn btn-primary" onclick="saveOgrenci()">Kaydet</button>
+      <button class="btn btn-primary" onclick="saveOgrEkle()">Kaydet</button>
     </div>`);
 }
-function saveOgrenci(){
-  const ad=document.getElementById('og_ad').value.trim();
+function saveOgrEkle(){
+  const ad=document.getElementById('oa_ad').value.trim();
   if(!ad){alert('Ad gerekli!');return;}
-  ogrenciler.push({id:Date.now(),ad,oda:document.getElementById('og_oda').value,tc:document.getElementById('og_tc').value,tel:document.getElementById('og_tel').value,email:document.getElementById('og_mail').value,durum:'Aktif'});
+  const id=Date.now();
+  ogrenciler.push({id,ad,tc:document.getElementById('oa_tc').value,tel:document.getElementById('oa_tel').value,email:document.getElementById('oa_mail').value,oda:document.getElementById('oa_oda').value||null,yatak:parseInt(document.getElementById('oa_yatak').value)||null,durum:'Aktif',kayit:new Date().toISOString().split('T')[0]});
   closeModal();pgOgrenciler(document.getElementById('pageBody'));
 }
-function openOgrenciDuzenle(id){
+function openOgrDuzenle(id){
   const o=ogrenciler.find(x=>x.id===id);
   openModal(`
-    <div class="modal-header"><h3>✏️ Öğrenci Düzenle</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <div class="modal-hdr"><h3>✏️ Öğrenci Düzenle</h3><button class="modal-x" onclick="closeModal()">✕</button></div>
     <div class="modal-body">
-      <div class="form-group"><label class="form-label">Ad Soyad</label><input class="form-control" id="ed_ad" value="${o.ad}"></div>
-      <div class="form-group"><label class="form-label">Telefon</label><input class="form-control" id="ed_tel" value="${o.tel}"></div>
-      <div class="form-group"><label class="form-label">Oda</label>
-        <select class="form-control" id="ed_oda">${TUM_ODALAR.map(x=>`<option value="${x}" ${x===o.oda?'selected':''}>${x} — ${odaTip(x)}K</option>`).join('')}</select>
+      <div class="form-group"><label>Ad Soyad</label><input class="form-control" id="od_ad" value="${o.ad}"></div>
+      <div class="form-group"><label>Telefon</label><input class="form-control" id="od_tel" value="${o.tel}"></div>
+      <div class="form-row">
+        <div class="form-group"><label>Oda</label>
+          <select class="form-control" id="od_oda"><option value="">—</option>${TUM_ODALAR.map(x=>`<option value="${x}" ${x===o.oda?'selected':''}>${x}</option>`).join('')}</select>
+        </div>
+        <div class="form-group"><label>Yatak</label>
+          <select class="form-control" id="od_yatak"><option value="">—</option><option ${o.yatak===1?'selected':''}>1</option><option ${o.yatak===2?'selected':''}>2</option><option ${o.yatak===3?'selected':''}>3</option><option ${o.yatak===4?'selected':''}>4</option></select>
+        </div>
       </div>
-      <div class="form-group"><label class="form-label">Durum</label>
-        <select class="form-control" id="ed_durum">
-          <option value="Aktif" ${o.durum==='Aktif'?'selected':''}>Aktif</option>
-          <option value="Pasif" ${o.durum==='Pasif'?'selected':''}>Pasif</option>
-        </select>
+      <div class="form-group"><label>Durum</label>
+        <select class="form-control" id="od_durum"><option ${o.durum==='Aktif'?'selected':''}>Aktif</option><option ${o.durum==='Pasif'?'selected':''}>Pasif</option></select>
       </div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-secondary" onclick="closeModal()">İptal</button>
-      <button class="btn btn-primary" onclick="updateOgrenci(${id})">Güncelle</button>
+      <button class="btn btn-primary" onclick="updateOgr(${id})">Güncelle</button>
     </div>`);
 }
-function updateOgrenci(id){
+function updateOgr(id){
   const o=ogrenciler.find(x=>x.id===id);
-  o.ad=document.getElementById('ed_ad').value; o.tel=document.getElementById('ed_tel').value;
-  o.oda=document.getElementById('ed_oda').value; o.durum=document.getElementById('ed_durum').value;
+  o.ad=document.getElementById('od_ad').value;o.tel=document.getElementById('od_tel').value;
+  o.oda=document.getElementById('od_oda').value||null;o.yatak=parseInt(document.getElementById('od_yatak').value)||null;
+  o.durum=document.getElementById('od_durum').value;
   closeModal();pgOgrenciler(document.getElementById('pageBody'));
 }
-function silOgrenci(id){if(confirm('Bu öğrenci silinsin mi?')){ogrenciler=ogrenciler.filter(x=>x.id!==id);pgOgrenciler(document.getElementById('pageBody'));}}
+function silOgr(id){if(confirm('Silinsin mi?')){ogrenciler=ogrenciler.filter(x=>x.id!==id);pgOgrenciler(document.getElementById('pageBody'));}}
 
-// ─────────────────────────────────────────
+// ══════════════════════════════════════
 // PERSONEL
-// ─────────────────────────────────────────
+// ══════════════════════════════════════
 function pgPersonel(b){
-  setHeader('Personel',`${personelList.length} personel`,`<button class="btn btn-primary" onclick="openPersonelEkle()">+ Personel Ekle</button>`);
-  b.innerHTML=`<div class="card"><div class="table-wrap"><table>
+  setHeader('Personel',`${personelList.length} personel`,`<button class="btn btn-primary" onclick="openPerEkle()">+ Personel Ekle</button>`);
+  b.innerHTML=`
+  <div class="stats-4">
+    ${[['Müdür','bg-purple',1],['Operasyon','bg-blue',2],['Muhasebe','bg-amber',1],['Güvenlik/Temizlik','bg-gray',1]].map(([t,c,n])=>`
+    <div class="stat-card"><div class="stat-label">${t}</div><div class="stat-value" style="font-size:20px">${n}</div></div>`).join('')}
+  </div>
+  <div class="card"><div class="tbl-wrap"><table>
     <thead><tr><th>#</th><th>Ad Soyad</th><th>Görev</th><th>Telefon</th><th>E-posta</th><th>Durum</th><th></th></tr></thead>
     <tbody>${personelList.map((p,i)=>`<tr>
       <td class="td-muted">${i+1}</td><td class="td-name">${p.ad}</td><td>${p.gorev}</td>
       <td class="td-muted">${p.tel}</td><td class="td-muted">${p.email}</td>
-      <td><span class="badge ${p.durum==='Aktif'?'badge-green':'badge-gray'}">${p.durum}</span></td>
-      <td style="display:flex;gap:6px">
-        <button class="btn btn-secondary btn-xs" onclick="openPersonelDuzenle(${p.id})">✏️</button>
-        <button class="btn btn-danger btn-xs" onclick="silPersonel(${p.id})">🗑️</button>
-      </td>
+      <td><span class="badge ${p.durum==='Aktif'?'bg-green':'bg-gray'}">${p.durum}</span></td>
+      <td><button class="btn btn-danger btn-xs" onclick="silPer(${p.id})">🗑️</button></td>
     </tr>`).join('')}</tbody>
   </table></div></div>`;
 }
-function openPersonelEkle(){
+function openPerEkle(){
   openModal(`
-    <div class="modal-header"><h3>👥 Personel Ekle</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <div class="modal-hdr"><h3>👥 Personel Ekle</h3><button class="modal-x" onclick="closeModal()">✕</button></div>
     <div class="modal-body">
       <div class="form-row">
-        <div class="form-group"><label class="form-label">Ad Soyad</label><input class="form-control" id="ps_ad" placeholder="Ad Soyad"></div>
-        <div class="form-group"><label class="form-label">Görev</label><input class="form-control" id="ps_gorev" placeholder="Görev / Unvan"></div>
+        <div class="form-group"><label>Ad Soyad</label><input class="form-control" id="pa_ad" placeholder="Ad Soyad"></div>
+        <div class="form-group"><label>Görev</label><input class="form-control" id="pa_gorev" placeholder="Görev/Unvan"></div>
       </div>
       <div class="form-row">
-        <div class="form-group"><label class="form-label">Telefon</label><input class="form-control" id="ps_tel" placeholder="05xx..."></div>
-        <div class="form-group"><label class="form-label">E-posta</label><input class="form-control" id="ps_mail" placeholder="@koy.com"></div>
+        <div class="form-group"><label>Telefon</label><input class="form-control" id="pa_tel"></div>
+        <div class="form-group"><label>E-posta</label><input class="form-control" id="pa_mail"></div>
       </div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-secondary" onclick="closeModal()">İptal</button>
-      <button class="btn btn-primary" onclick="savePersonel()">Kaydet</button>
+      <button class="btn btn-primary" onclick="savePer()">Kaydet</button>
     </div>`);
 }
-function savePersonel(){
-  const ad=document.getElementById('ps_ad').value.trim();if(!ad)return;
-  personelList.push({id:Date.now(),ad,gorev:document.getElementById('ps_gorev').value,tel:document.getElementById('ps_tel').value,email:document.getElementById('ps_mail').value,durum:'Aktif'});
-  closeModal();pgPersonel(document.getElementById('pageBody'));
-}
-function openPersonelDuzenle(id){
-  const p=personelList.find(x=>x.id===id);
-  openModal(`
-    <div class="modal-header"><h3>✏️ Personel Düzenle</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
-    <div class="modal-body">
-      <div class="form-group"><label class="form-label">Ad Soyad</label><input class="form-control" id="ped_ad" value="${p.ad}"></div>
-      <div class="form-group"><label class="form-label">Görev</label><input class="form-control" id="ped_gorev" value="${p.gorev}"></div>
-      <div class="form-group"><label class="form-label">Durum</label>
-        <select class="form-control" id="ped_durum">
-          <option value="Aktif" ${p.durum==='Aktif'?'selected':''}>Aktif</option>
-          <option value="Pasif" ${p.durum==='Pasif'?'selected':''}>Pasif</option>
-        </select>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-secondary" onclick="closeModal()">İptal</button>
-      <button class="btn btn-primary" onclick="updatePersonel(${id})">Güncelle</button>
-    </div>`);
-}
-function updatePersonel(id){
-  const p=personelList.find(x=>x.id===id);
-  p.ad=document.getElementById('ped_ad').value;p.gorev=document.getElementById('ped_gorev').value;p.durum=document.getElementById('ped_durum').value;
-  closeModal();pgPersonel(document.getElementById('pageBody'));
-}
-function silPersonel(id){if(confirm('Bu personel silinsin mi?')){personelList=personelList.filter(x=>x.id!==id);pgPersonel(document.getElementById('pageBody'));}}
+function savePer(){const ad=document.getElementById('pa_ad').value.trim();if(!ad)return;personelList.push({id:Date.now(),ad,gorev:document.getElementById('pa_gorev').value,tel:document.getElementById('pa_tel').value,email:document.getElementById('pa_mail').value,durum:'Aktif'});closeModal();pgPersonel(document.getElementById('pageBody'));}
+function silPer(id){if(confirm('Silinsin mi?')){personelList=personelList.filter(x=>x.id!==id);pgPersonel(document.getElementById('pageBody'));}}
 
-// ─────────────────────────────────────────
-// BAŞVURULAR
-// ─────────────────────────────────────────
+// ══════════════════════════════════════
+// BAŞVURU YÖNETİMİ (Admin/Ops tarafı)
+// ══════════════════════════════════════
 function pgBasvurular(b){
-  setHeader('Başvurular','Yurt başvuruları ve değerlendirme',`<button class="btn btn-primary" onclick="openBasvuruEkle()">+ Başvuru Ekle</button>`);
-  b.innerHTML=`<div class="card"><div class="table-wrap"><table>
-    <thead><tr><th>Ad Soyad</th><th>Telefon</th><th>Oda Tipi</th><th>Tarih</th><th>Durum</th><th>Not</th><th></th></tr></thead>
-    <tbody>${basvurular.map(bv=>`<tr>
-      <td class="td-name">${bv.ad}</td><td class="td-muted">${bv.tel}</td>
-      <td><span class="badge badge-gray">${bv.tip}</span></td>
+  setHeader('Başvurular','Öğrenci başvuruları ve değerlendirme süreçleri',
+    `<button class="btn btn-primary" onclick="openManuelBasvuru()">+ Manuel Ekle</button>`);
+  // Akış açıklaması
+  b.innerHTML=`
+  <div class="card" style="margin-bottom:14px">
+    <div class="card-body">
+      <div class="card-title" style="margin-bottom:12px">📋 Başvuru Süreci</div>
+      <div class="app-flow">
+        <div class="flow-step done"><span class="flow-icon">📝</span><div class="flow-title">Başvuru Formu</div><div class="flow-sub">Öğrenci doldurur</div></div>
+        <div class="flow-step done"><span class="flow-icon">🔍</span><div class="flow-title">İnceleme</div><div class="flow-sub">Operasyon inceler</div></div>
+        <div class="flow-step active-step"><span class="flow-icon">✅</span><div class="flow-title">Onay/Red</div><div class="flow-sub">Müdür onaylar</div></div>
+        <div class="flow-step"><span class="flow-icon">🛏️</span><div class="flow-title">Yatak Tahsis</div><div class="flow-sub">Oda atanır</div></div>
+        <div class="flow-step"><span class="flow-icon">📱</span><div class="flow-title">Bildirim</div><div class="flow-sub">SMS/WA gönderilir</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-4">
+    <div class="stat-card sc-amber"><div class="stat-label">Bekliyor</div><div class="stat-value">${basvurular.filter(x=>x.durum==='Bekliyor').length}</div></div>
+    <div class="stat-card sc-blue"><div class="stat-label">İncelemede</div><div class="stat-value">${basvurular.filter(x=>x.durum==='İncelemede').length}</div></div>
+    <div class="stat-card sc-green"><div class="stat-label">Onaylandı</div><div class="stat-value">${basvurular.filter(x=>x.durum==='Onaylandı').length}</div></div>
+    <div class="stat-card sc-red"><div class="stat-label">Reddedildi</div><div class="stat-value">${basvurular.filter(x=>x.durum==='Reddedildi').length}</div></div>
+  </div>
+
+  <div class="card"><div class="tbl-wrap"><table>
+    <thead><tr><th>Ad Soyad</th><th>TC</th><th>Tel</th><th>Oda Tipi</th><th>Tarih</th><th>Durum</th><th>Not</th><th>İşlem</th></tr></thead>
+    <tbody>
+    ${basvurular.map(bv=>`<tr>
+      <td class="td-name">${bv.ad}</td>
+      <td class="td-muted">${bv.tc}</td>
+      <td class="td-muted">${bv.tel}</td>
+      <td><span class="badge bg-gray">${bv.tip}</span></td>
       <td class="td-muted">${bv.tarih}</td>
-      <td><span class="badge ${bv.durum==='Onaylandı'?'badge-green':bv.durum==='Bekliyor'?'badge-amber':'badge-red'}">${bv.durum}</span></td>
-      <td class="td-muted" style="font-size:11px">${bv.not||'—'}</td>
-      <td style="display:flex;gap:6px">
-        ${bv.durum==='Bekliyor'?`<button class="btn btn-secondary btn-xs" onclick="basvuruOnayla(${bv.id})">✅ Onayla</button>
-          <button class="btn btn-danger btn-xs" onclick="openBasvuruReddet(${bv.id})">❌ Reddet</button>`:'—'}
+      <td><span class="badge ${bv.durum==='Onaylandı'?'bg-green':bv.durum==='Bekliyor'?'bg-amber':bv.durum==='İncelemede'?'bg-blue':'bg-red'}">${bv.durum}</span></td>
+      <td class="td-muted" style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${bv.mesaj||bv.not||'—'}</td>
+      <td style="display:flex;gap:4px;flex-wrap:wrap">
+        ${bv.durum==='Bekliyor'?`
+          <button class="btn btn-warning btn-xs" onclick="basIncele(${bv.id})">🔍</button>
+          <button class="btn btn-danger btn-xs" onclick="openBasRed(${bv.id})">✗</button>`:
+        bv.durum==='İncelemede'?`
+          <button class="btn btn-success btn-xs" onclick="openBasOnayla(${bv.id})">✓ Onayla</button>
+          <button class="btn btn-danger btn-xs" onclick="openBasRed(${bv.id})">✗</button>`:
+        bv.durum==='Onaylandı'?`<button class="btn btn-secondary btn-xs" onclick="openYatakTahsis(${bv.id})">🛏️ Tahsis</button>`:'—'}
       </td>
     </tr>`).join('')}
-    </tbody></table></div></div>`;
+    </tbody>
+  </table></div></div>`;
 }
-function basvuruOnayla(id){basvurular.find(x=>x.id===id).durum='Onaylandı';pgBasvurular(document.getElementById('pageBody'));}
-function openBasvuruReddet(id){
+
+function basIncele(id){
+  const bv=basvurular.find(x=>x.id===id);
+  bv.durum='İncelemede'; bv.adim=2;
+  pgBasvurular(document.getElementById('pageBody'));
+}
+function openBasOnayla(id){
   openModal(`
-    <div class="modal-header"><h3>❌ Başvuruyu Reddet</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <div class="modal-hdr"><h3>✅ Başvuruyu Onayla</h3><button class="modal-x" onclick="closeModal()">✕</button></div>
     <div class="modal-body">
-      <div class="form-group"><label class="form-label">Red Sebebi</label>
-        <input class="form-control" id="red_not" placeholder="Kapasite dolu, şartlar sağlanmıyor...">
-      </div>
+      <div class="notice" style="margin-bottom:12px">Onayladıktan sonra öğrenciye yatak tahsis edebilir ve SMS/WA bildirimi gönderebilirsiniz.</div>
+      <div class="form-group"><label>Onay Notu (isteğe bağlı)</label><input class="form-control" id="oa_not" placeholder="Onay mesajı..."></div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-secondary" onclick="closeModal()">İptal</button>
-      <button class="btn btn-danger" onclick="basvuruReddet(${id})">Reddet</button>
+      <button class="btn btn-success" onclick="basOnayla(${id})">✅ Onayla</button>
     </div>`);
 }
-function basvuruReddet(id){const bv=basvurular.find(x=>x.id===id);bv.durum='Reddedildi';bv.not=document.getElementById('red_not').value;closeModal();pgBasvurular(document.getElementById('pageBody'));}
-function openBasvuruEkle(){
+function basOnayla(id){
+  const bv=basvurular.find(x=>x.id===id);
+  bv.durum='Onaylandı'; bv.adim=3;
+  bv.mesaj=document.getElementById('oa_not').value||'Başvurunuz onaylandı.';
+  closeModal(); pgBasvurular(document.getElementById('pageBody'));
+}
+function openBasRed(id){
   openModal(`
-    <div class="modal-header"><h3>📋 Başvuru Ekle</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <div class="modal-hdr"><h3>❌ Başvuruyu Reddet</h3><button class="modal-x" onclick="closeModal()">✕</button></div>
     <div class="modal-body">
+      <div class="form-group"><label>Red Sebebi</label><input class="form-control" id="br_not" placeholder="Kapasite dolu, şartlar sağlanmıyor..."></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal()">İptal</button>
+      <button class="btn btn-danger" onclick="basReddet(${id})">Reddet</button>
+    </div>`);
+}
+function basReddet(id){
+  const bv=basvurular.find(x=>x.id===id);
+  bv.durum='Reddedildi'; bv.adim=0;
+  bv.not=document.getElementById('br_not').value;
+  closeModal(); pgBasvurular(document.getElementById('pageBody'));
+}
+function openYatakTahsis(id){
+  const bv=basvurular.find(x=>x.id===id);
+  const bos=[];
+  TUM_ODALAR.forEach(o=>{BEDS[o].forEach(bed=>{if(bed.durum==='empty')bos.push({oda:o,no:bed.no});});});
+  openModal(`
+    <div class="modal-hdr"><h3>🛏️ Yatak Tahsis — ${bv.ad}</h3><button class="modal-x" onclick="closeModal()">✕</button></div>
+    <div class="modal-body">
+      <div class="notice" style="margin-bottom:12px">Talep: <b>${bv.tip}</b> — ${bos.length} boş yatak mevcut</div>
+      <div class="form-group"><label>Boş Yatak Seç</label>
+        <select class="form-control" id="yt_yatak">
+          ${bos.slice(0,30).map(y=>`<option value="${y.oda}|${y.no}">Oda ${y.oda} — Yatak ${y.no} (${odaKapasite(y.oda)} Kişilik)</option>`).join('')}
+        </select>
+      </div>
+      <div class="notice notice-warn">Tahsis sonrası SMS/WA bildirimi gönderilecektir.</div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal()">İptal</button>
+      <button class="btn btn-primary" onclick="yatakTahsisEt(${id})">Tahsis Et & Bildir</button>
+    </div>`);
+}
+function yatakTahsisEt(id){
+  const bv=basvurular.find(x=>x.id===id);
+  const val=document.getElementById('yt_yatak').value.split('|');
+  const oda=val[0]; const bedNo=parseInt(val[1]);
+  const bed=BEDS[oda].find(b=>b.no===bedNo);
+  if(bed){bed.durum='occupied';}
+  bv.mesaj=`Oda ${oda} Yatak ${bedNo} tahsis edildi.`; bv.adim=4;
+  // Öğrenciye oda bilgisi ekle
+  const ogr=ogrenciler.find(o=>o.ad===bv.ad);
+  if(ogr){ogr.oda=oda;ogr.yatak=bedNo;if(bed)bed.ogrenci_id=ogr.id;}
+  closeModal();
+  alert(`✅ ${bv.ad} için Oda ${oda} Yatak ${bedNo} tahsis edildi!\n📱 SMS/WA bildirimi gönderildi.`);
+  pgBasvurular(document.getElementById('pageBody'));
+}
+function openManuelBasvuru(){
+  openModal(`
+    <div class="modal-hdr"><h3>📋 Manuel Başvuru</h3><button class="modal-x" onclick="closeModal()">✕</button></div>
+    <div class="modal-body">
+      <div class="notice" style="margin-bottom:10px">Öğrenci kendi başvurusunu online yapabilir. Bu form manuel (telefon/yüz yüze) kayıt içindir.</div>
       <div class="form-row">
-        <div class="form-group"><label class="form-label">Ad Soyad</label><input class="form-control" id="bv_ad" placeholder="Ad Soyad"></div>
-        <div class="form-group"><label class="form-label">Telefon</label><input class="form-control" id="bv_tel" placeholder="05xx..."></div>
+        <div class="form-group"><label>Ad Soyad</label><input class="form-control" id="mb_ad"></div>
+        <div class="form-group"><label>TC</label><input class="form-control" id="mb_tc"></div>
       </div>
-      <div class="form-group"><label class="form-label">Oda Tipi</label>
-        <select class="form-control" id="bv_tip"><option>1 Kişilik</option><option>2 Kişilik</option><option>3 Kişilik</option><option>4 Kişilik</option></select>
+      <div class="form-row">
+        <div class="form-group"><label>Telefon</label><input class="form-control" id="mb_tel"></div>
+        <div class="form-group"><label>E-posta</label><input class="form-control" id="mb_mail"></div>
+      </div>
+      <div class="form-group"><label>Oda Tipi Talebi</label>
+        <select class="form-control" id="mb_tip"><option>1 Kişilik</option><option>2 Kişilik</option><option>3 Kişilik</option><option>4 Kişilik</option></select>
       </div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-secondary" onclick="closeModal()">İptal</button>
-      <button class="btn btn-primary" onclick="saveBasvuru()">Ekle</button>
+      <button class="btn btn-primary" onclick="saveManuelBas()">Kaydet</button>
     </div>`);
 }
-function saveBasvuru(){
-  const ad=document.getElementById('bv_ad').value.trim();if(!ad)return;
-  basvurular.unshift({id:Date.now(),ad,tel:document.getElementById('bv_tel').value,tip:document.getElementById('bv_tip').value,tarih:new Date().toISOString().split('T')[0],durum:'Bekliyor',not:''});
+function saveManuelBas(){
+  const ad=document.getElementById('mb_ad').value.trim();if(!ad)return;
+  basvurular.unshift({id:Date.now(),ad,tc:document.getElementById('mb_tc').value,tel:document.getElementById('mb_tel').value,email:document.getElementById('mb_mail').value,tip:document.getElementById('mb_tip').value,tarih:new Date().toISOString().split('T')[0],durum:'Bekliyor',not:'',adim:1,mesaj:''});
   closeModal();pgBasvurular(document.getElementById('pageBody'));
 }
 
-// ─────────────────────────────────────────
+// ══════════════════════════════════════
+// FİNANS
+// ══════════════════════════════════════
+function pgFinans(b){
+  setHeader('Finans Modülü','Öğrenci bazlı borç ve tahsilat takibi',
+    `<button class="btn btn-primary" onclick="openOdemeEkle()">+ Ödeme Ekle</button>`);
+  const topTahsilat=finansKayitlar.filter(f=>f.durum==='Ödendi').reduce((s,f)=>s+f.odenen,0);
+  const topAlacak=finansKayitlar.filter(f=>f.durum!=='Ödendi').reduce((s,f)=>s+(f.tutar-f.odenen),0);
+  const topBorc=finansKayitlar.reduce((s,f)=>s+f.tutar,0);
+
+  b.innerHTML=`
+  <div class="stats-4">
+    <div class="stat-card sc-green"><div class="stat-label">Toplam Tahsilat</div><div class="stat-value">${(topTahsilat/1000).toFixed(1)}K ₺</div><div class="stat-sub">${finansKayitlar.filter(f=>f.durum==='Ödendi').length} kayıt</div></div>
+    <div class="stat-card sc-red"><div class="stat-label">Toplam Alacak</div><div class="stat-value">${(topAlacak/1000).toFixed(1)}K ₺</div><div class="stat-sub">gecikmiş</div></div>
+    <div class="stat-card sc-amber"><div class="stat-label">Kısmi Ödeme</div><div class="stat-value">${finansKayitlar.filter(f=>f.durum==='Kısmi').length}</div><div class="stat-sub">kayıt</div></div>
+    <div class="stat-card sc-blue"><div class="stat-label">Tahsil Oranı</div><div class="stat-value">${Math.round(topTahsilat/topBorç*100)}%</div></div>
+  </div>
+
+  <!-- Öğrenci bazlı borç -->
+  <div class="card" style="margin-bottom:14px">
+    <div class="action-bar"><div class="action-bar-title">👩 Öğrenci Bazlı Borç Durumu</div></div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Öğrenci</th><th>Oda</th><th>Toplam Borç</th><th>Ödenen</th><th>Kalan</th><th>Durum</th><th>İşlem</th></tr></thead>
+      <tbody>
+      ${ogrenciler.filter(o=>o.durum==='Aktif').map(ogr=>{
+        const ogrFin=finansKayitlar.filter(f=>f.ogrId===ogr.id);
+        const topBorOgr=ogrFin.reduce((s,f)=>s+f.tutar,0);
+        const topOde=ogrFin.reduce((s,f)=>s+f.odenen,0);
+        const kalan=topBorOgr-topOde;
+        const sDurum=kalan===0?'Temiz':kalan===topBorOgr?'Borçlu':'Kısmi';
+        return `<tr>
+          <td class="td-name">${ogr.ad}</td>
+          <td>${ogr.oda?`<span class="badge bg-primary">${ogr.oda}</span>`:'—'}</td>
+          <td>${topBorOgr.toLocaleString('tr')} ₺</td>
+          <td style="color:var(--green);font-weight:600">${topOde.toLocaleString('tr')} ₺</td>
+          <td class="fin-amount ${kalan>0?kalan<topBorOgr?'partial':'debt':'paid'}">${kalan.toLocaleString('tr')} ₺</td>
+          <td><span class="badge ${sDurum==='Temiz'?'bg-green':sDurum==='Borçlu'?'bg-red':'bg-amber'}">${sDurum}</span></td>
+          <td style="display:flex;gap:4px">
+            <button class="btn btn-secondary btn-xs" onclick="openOgrDetaiFin(${ogr.id})">📊 Detay</button>
+            ${kalan>0?`<button class="btn btn-warning btn-xs" onclick="openHatirlatma(${ogr.id})">📱 Hatırlat</button>`:''}
+          </td>
+        </tr>`;
+      }).join('')}
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- Tüm kayıtlar -->
+  <div class="card">
+    <div class="action-bar"><div class="action-bar-title">💳 Ödeme Kayıtları</div></div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Öğrenci</th><th>Dönem</th><th>Tutar</th><th>Ödenen</th><th>Tarih</th><th>Durum</th></tr></thead>
+      <tbody>
+      ${finansKayitlar.map(f=>`<tr>
+        <td class="td-name">${f.ogrAd}</td>
+        <td>${f.ay}</td>
+        <td>${f.tutar.toLocaleString('tr')} ₺</td>
+        <td class="${f.odenen===f.tutar?'fin-amount paid':f.odenen>0?'fin-amount partial':''}">${f.odenen.toLocaleString('tr')} ₺</td>
+        <td class="td-muted">${f.tarih||'—'}</td>
+        <td><span class="badge ${f.durum==='Ödendi'?'bg-green':f.durum==='Kısmi'?'bg-amber':'bg-red'}">${f.durum}</span></td>
+      </tr>`).join('')}
+      </tbody>
+    </table></div>
+  </div>`;
+}
+var topBorç=finansKayitlar.reduce((s,f)=>s+f.tutar,0);
+function openOgrDetaiFin(ogrId){
+  const ogr=ogrenciler.find(o=>o.id===ogrId);
+  const ogrFin=finansKayitlar.filter(f=>f.ogrId===ogrId);
+  openModal(`
+    <div class="modal-hdr"><h3>📊 ${ogr.ad} — Ödeme Geçmişi</h3><button class="modal-x" onclick="closeModal()">✕</button></div>
+    <div class="modal-body">
+      ${ogrFin.map(f=>`
+      <div class="fin-row">
+        <div><div class="fin-name">${f.ay}</div><div class="fin-meta">${f.tarih||'Ödenmedi'}</div></div>
+        <div>
+          <span class="badge ${f.durum==='Ödendi'?'bg-green':f.durum==='Kısmi'?'bg-amber':'bg-red'}">${f.durum}</span>
+          <div class="fin-amount ${f.odenen===f.tutar?'paid':f.odenen>0?'partial':'debt'}" style="text-align:right;margin-top:3px">
+            ${f.odenen.toLocaleString('tr')} / ${f.tutar.toLocaleString('tr')} ₺
+          </div>
+        </div>
+      </div>`).join('')}
+    </div>
+    <div class="modal-footer"><button class="btn btn-primary" onclick="closeModal()">Kapat</button></div>`);
+}
+function openOdemeEkle(){
+  openModal(`
+    <div class="modal-hdr"><h3>💳 Ödeme Ekle</h3><button class="modal-x" onclick="closeModal()">✕</button></div>
+    <div class="modal-body">
+      <div class="form-group"><label>Öğrenci</label>
+        <select class="form-control" id="oe_ogr">${ogrenciler.filter(o=>o.durum==='Aktif').map(o=>`<option value="${o.id}">${o.ad}</option>`).join('')}</select>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Dönem</label><input class="form-control" id="oe_ay" placeholder="Ocak 2025"></div>
+        <div class="form-group"><label>Tutar (₺)</label><input class="form-control" id="oe_tutar" type="number" placeholder="3500"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Ödenen (₺)</label><input class="form-control" id="oe_odenen" type="number" placeholder="3500"></div>
+        <div class="form-group"><label>Ödeme Tarihi</label><input class="form-control" id="oe_tarih" type="date" value="${new Date().toISOString().split('T')[0]}"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal()">İptal</button>
+      <button class="btn btn-primary" onclick="saveOdeme()">Kaydet</button>
+    </div>`);
+}
+function saveOdeme(){
+  const ogrId=parseInt(document.getElementById('oe_ogr').value);
+  const ogr=ogrenciler.find(o=>o.id===ogrId);
+  const tutar=parseInt(document.getElementById('oe_tutar').value)||0;
+  const odenen=parseInt(document.getElementById('oe_odenen').value)||0;
+  finansKayitlar.push({id:Date.now(),ogrId,ogrAd:ogr.ad,ay:document.getElementById('oe_ay').value,tutar,odenen,tarih:document.getElementById('oe_tarih').value,durum:odenen>=tutar?'Ödendi':odenen>0?'Kısmi':'Bekliyor'});
+  topBorç=finansKayitlar.reduce((s,f)=>s+f.tutar,0);
+  closeModal();pgFinans(document.getElementById('pageBody'));
+}
+function openHatirlatma(ogrId){
+  const ogr=ogrenciler.find(o=>o.id===ogrId);
+  const ogrFin=finansKayitlar.filter(f=>f.ogrId===ogrId&&f.durum!=='Ödendi');
+  const topKalan=ogrFin.reduce((s,f)=>s+(f.tutar-f.odenen),0);
+  openModal(`
+    <div class="modal-hdr"><h3>📱 Ödeme Hatırlatması</h3><button class="modal-x" onclick="closeModal()">✕</button></div>
+    <div class="modal-body">
+      <div class="notice notice-warn">SMS ve WhatsApp üzerinden otomatik hatırlatma gönderilecek.</div>
+      <div style="margin-top:12px;font-size:13px">
+        <b>Alıcı:</b> ${ogr.ad}<br>
+        <b>Telefon:</b> ${ogr.tel}<br>
+        <b>Kalan Borç:</b> ${topKalan.toLocaleString('tr')} ₺
+      </div>
+      <div class="form-group" style="margin-top:12px"><label>Mesaj Şablonu</label>
+        <textarea class="form-control" style="height:80px">Sayın ${ogr.ad}, ${topKalan.toLocaleString('tr')} ₺ tutarındaki yurt aidatınız henüz ödenmemiştir. Lütfen en kısa sürede ödeme yapınız. Korkmazlar Yurt Yönetimi</textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal()">İptal</button>
+      <button class="btn btn-warning" onclick="alert('📱 SMS gönderildi!\\n💬 WhatsApp mesajı gönderildi!');closeModal()">📱 Gönder</button>
+    </div>`);
+}
+
+// ══════════════════════════════════════
 // ARIZALAR
-// ─────────────────────────────────────────
+// ══════════════════════════════════════
 function pgArizalar(b){
-  setHeader('Arıza Yönetimi','Bildirilen arızalar ve takip');
+  setHeader('Arıza Yönetimi','Bildirilen arıza ve bakım talepleri');
   b.innerHTML=`<div class="card">${arizalar.map(a=>`
     <div class="ariza-item">
-      <div class="ariza-icon ${a.oncelik==='Yüksek'?'urgent':a.durum==='Tamamlandı'?'done':'normal'}">
+      <div class="ariza-icon ${a.oncelik==='Yüksek'?'ai-urgent':a.durum==='Tamamlandı'?'ai-done':'ai-normal'}">
         ${a.oncelik==='Yüksek'?'⚠️':a.durum==='Tamamlandı'?'✅':'🔧'}
       </div>
       <div style="flex:1">
         <div class="ariza-title">${a.konu}</div>
         <div class="ariza-meta">Oda ${a.oda} · ${a.tarih} · ${a.aciklama}</div>
         <div class="ariza-badges">
-          <span class="badge ${a.durum==='Tamamlandı'?'badge-green':a.durum==='İşlemde'?'badge-blue':'badge-amber'}">${a.durum}</span>
-          <span class="badge ${a.oncelik==='Yüksek'?'badge-red':a.oncelik==='Orta'?'badge-amber':'badge-gray'}">${a.oncelik} öncelik</span>
+          <span class="badge ${a.durum==='Tamamlandı'?'bg-green':a.durum==='İşlemde'?'bg-blue':'bg-amber'}">${a.durum}</span>
+          <span class="badge ${a.oncelik==='Yüksek'?'bg-red':a.oncelik==='Orta'?'bg-amber':'bg-gray'}">${a.oncelik}</span>
         </div>
       </div>
-      ${a.durum!=='Tamamlandı'?`<div style="display:flex;flex-direction:column;gap:6px">
+      ${a.durum!=='Tamamlandı'?`<div style="display:flex;flex-direction:column;gap:5px">
         <button class="btn btn-secondary btn-sm" onclick="arizaDurum(${a.id},'İşlemde')">İşleme Al</button>
-        <button class="btn btn-primary btn-sm" onclick="arizaDurum(${a.id},'Tamamlandı')">✅ Tamamlandı</button>
+        <button class="btn btn-success btn-sm" onclick="arizaDurum(${a.id},'Tamamlandı')">✅ Bitti</button>
       </div>`:''}
-    </div>`).join('')||'<div class="empty-state"><div class="empty-icon">🔧</div>Arıza bildirimi yok.</div>'}
+    </div>`).join('')||'<div class="empty-state"><div class="empty-icon">🔧</div>Arıza yok.</div>'}
   </div>`;
 }
-function arizaDurum(id,yeni){arizalar.find(x=>x.id===id).durum=yeni;pgArizalar(document.getElementById('pageBody'));}
+function arizaDurum(id,d){arizalar.find(x=>x.id===id).durum=d;pgArizalar(document.getElementById('pageBody'));}
 
-// ─────────────────────────────────────────
+// ══════════════════════════════════════
 // DUYURULAR
-// ─────────────────────────────────────────
+// ══════════════════════════════════════
 function pgDuyurular(b){
   setHeader('Duyurular','Yurt duyuruları',`<button class="btn btn-primary" onclick="openDuyuruEkle()">+ Duyuru Ekle</button>`);
   b.innerHTML=duyurular.map(d=>`
-    <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:10px">
+    <div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:10px">
       <div class="duyuru-item" style="flex:1">
         <div class="duyuru-title">${d.baslik}</div>
         <div class="duyuru-date">📅 ${d.tarih}</div>
         <div class="duyuru-body">${d.icerik}</div>
       </div>
-      <button class="btn btn-danger btn-sm" onclick="silDuyuru(${d.id})">🗑️</button>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <button class="btn btn-warning btn-xs" onclick="openDuyuruBildir(${d.id})">📱</button>
+        <button class="btn btn-danger btn-xs" onclick="silDuyuru(${d.id})">🗑️</button>
+      </div>
     </div>`).join('');
 }
 function openDuyuruEkle(){
   openModal(`
-    <div class="modal-header"><h3>📢 Duyuru Ekle</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <div class="modal-hdr"><h3>📢 Duyuru Ekle</h3><button class="modal-x" onclick="closeModal()">✕</button></div>
     <div class="modal-body">
-      <div class="form-group"><label class="form-label">Başlık</label><input class="form-control" id="dy_baslik" placeholder="Duyuru başlığı"></div>
-      <div class="form-group"><label class="form-label">İçerik</label><textarea class="form-control" id="dy_icerik" placeholder="Duyuru metni..."></textarea></div>
+      <div class="form-group"><label>Başlık</label><input class="form-control" id="dy_b" placeholder="Duyuru başlığı"></div>
+      <div class="form-group"><label>İçerik</label><textarea class="form-control" id="dy_i" placeholder="Duyuru metni..."></textarea></div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-secondary" onclick="closeModal()">İptal</button>
       <button class="btn btn-primary" onclick="saveDuyuru()">Yayınla</button>
     </div>`);
 }
-function saveDuyuru(){
-  const baslik=document.getElementById('dy_baslik').value.trim();if(!baslik)return;
-  duyurular.unshift({id:Date.now(),baslik,tarih:new Date().toISOString().split('T')[0],icerik:document.getElementById('dy_icerik').value});
-  closeModal();pgDuyurular(document.getElementById('pageBody'));
+function saveDuyuru(){const b=document.getElementById('dy_b').value.trim();if(!b)return;duyurular.unshift({id:Date.now(),baslik:b,tarih:new Date().toISOString().split('T')[0],icerik:document.getElementById('dy_i').value});closeModal();pgDuyurular(document.getElementById('pageBody'));}
+function silDuyuru(id){if(confirm('Silinsin mi?')){duyurular=duyurular.filter(x=>x.id!==id);pgDuyurular(document.getElementById('pageBody'));}}
+function openDuyuruBildir(id){
+  const d=duyurular.find(x=>x.id===id);
+  alert(`📱 Duyuru bildirimi gönderildi!\n\nSMS: ${ogrenciler.length} öğrenciye\nWhatsApp: ${ogrenciler.length} öğrenciye\n\nDuyuru: "${d.baslik}"`);
 }
-function silDuyuru(id){if(confirm('Duyuru silinsin mi?')){duyurular=duyurular.filter(x=>x.id!==id);pgDuyurular(document.getElementById('pageBody'));}}
 
-// ─────────────────────────────────────────
+// ══════════════════════════════════════
 // BELGELER
-// ─────────────────────────────────────────
+// ══════════════════════════════════════
 function pgBelgeler(b){
   setHeader('Belgeler','Öğrenci belge talepleri');
   b.innerHTML=`<div class="card">${belgeler.map(x=>`
-    <div class="belge-item">
-      <div>
-        <div class="belge-name">📄 ${x.ogrAd} — ${x.tip}</div>
-        <div class="belge-date">${x.tarih}</div>
-      </div>
-      <div style="display:flex;align-items:center;gap:10px">
-        <span class="badge ${x.durum==='Hazır'?'badge-green':'badge-amber'}">${x.durum}</span>
-        ${x.durum==='Hazır'
-          ?`<button class="btn btn-secondary btn-sm">⬇️ İndir</button>`
-          :`<button class="btn btn-primary btn-sm" onclick="belgeyiHazirla(${x.id})">Hazırla</button>`}
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 15px;border-bottom:1px solid var(--border)">
+      <div><div style="font-size:13px;font-weight:600">📄 ${x.ogrAd} — ${x.tip}</div><div style="font-size:11px;color:var(--muted)">${x.tarih}</div></div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <span class="badge ${x.durum==='Hazır'?'bg-green':'bg-amber'}">${x.durum}</span>
+        ${x.durum==='Hazır'?`<button class="btn btn-secondary btn-sm">⬇️ İndir</button>`:`<button class="btn btn-primary btn-sm" onclick="belgeyiHazirla(${x.id})">Hazırla</button>`}
       </div>
     </div>`).join('')}</div>`;
 }
 function belgeyiHazirla(id){belgeler.find(x=>x.id===id).durum='Hazır';pgBelgeler(document.getElementById('pageBody'));}
 
-// ─────────────────────────────────────────
-// PERSONEL HOME
-// ─────────────────────────────────────────
-function personelHome(b){
-  setHeader('Ana Sayfa','Personel paneli — hoş geldiniz');
-  const bekleyen=arizalar.filter(a=>a.durum!=='Tamamlandı').length;
+// ══════════════════════════════════════
+// MESAJLAR (SMS/WA Altyapısı)
+// ══════════════════════════════════════
+function pgMesajlar(b){
+  setHeader('Mesaj Sistemi','SMS ve WhatsApp entegrasyon altyapısı');
   b.innerHTML=`
-  <div class="hero-card">
-    <div><h3>👋 Merhaba, Personel!</h3><p>Bugün: ${new Date().toLocaleDateString('tr-TR',{weekday:'long',year:'numeric',month:'long',day:'numeric'})}</p></div>
-    <div class="hero-badge">Korkmazlar Yurdu · 2025/2026</div>
-  </div>
-  <div class="grid-2">
+  <div class="g2">
     <div class="card card-body">
-      <div class="card-title">📋 Özet Bilgiler</div>
-      <table class="info-table">
-        <tr><td class="ik">Toplam Oda</td><td class="iv">60 oda</td></tr>
-        <tr><td class="ik">Toplam Kapasite</td><td class="iv">174 kişi</td></tr>
-        <tr><td class="ik">Bekleyen Arıza</td><td class="iv" style="color:${bekleyen>0?'var(--red)':'var(--green)'}">${bekleyen} arıza</td></tr>
-        <tr><td class="ik">Personel Sayısı</td><td class="iv">${personelList.length} kişi</td></tr>
-      </table>
+      <div class="card-title">📱 Kanal Durumu</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--gbg);border-radius:var(--radius-md);border:1px solid #86efac">
+          <div><div style="font-weight:600;font-size:13px">💬 WhatsApp Business API</div><div style="font-size:11px;color:var(--gtxt)">Meta Cloud API — Aktif</div></div>
+          <span class="badge bg-green">Bağlı</span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--abg);border-radius:var(--radius-md);border:1px solid #fcd34d">
+          <div><div style="font-weight:600;font-size:13px">📲 SMS Entegrasyonu</div><div style="font-size:11px;color:var(--atxt)">Netgsm / İleti365 — Yapılandırılmadı</div></div>
+          <span class="badge bg-amber">Bekliyor</span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--bg);border-radius:var(--radius-md);border:1px solid var(--border)">
+          <div><div style="font-weight:600;font-size:13px">📧 E-posta</div><div style="font-size:11px;color:var(--muted)">SMTP — Yapılandırılmadı</div></div>
+          <span class="badge bg-gray">Pasif</span>
+        </div>
+      </div>
+      <div class="notice notice-warn" style="margin-top:12px">SMS/WA entegrasyonu aktifleştirmek için API anahtarı girilmesi gerekiyor.</div>
     </div>
-    <div class="card">
-      <div class="action-bar"><div class="action-bar-title">🔧 Bekleyen Arızalar</div></div>
-      ${arizalar.filter(a=>a.durum!=='Tamamlandı').map(a=>`
-      <div class="ariza-item">
-        <div class="ariza-icon ${a.oncelik==='Yüksek'?'urgent':'normal'}">🔧</div>
-        <div style="flex:1"><div class="ariza-title">${a.konu}</div><div class="ariza-meta">Oda ${a.oda} · ${a.tarih}</div></div>
-        <span class="badge ${a.oncelik==='Yüksek'?'badge-red':'badge-amber'}">${a.oncelik}</span>
-      </div>`).join('')||'<div class="empty-state" style="padding:20px">Bekleyen arıza yok ✅</div>'}
+    <div class="card card-body">
+      <div class="card-title">📊 Mesaj İstatistikleri</div>
+      <div class="stats-3" style="gap:8px">
+        <div class="stat-card sc-green" style="padding:10px"><div class="stat-label">Gönderilen</div><div class="stat-value" style="font-size:20px">0</div></div>
+        <div class="stat-card sc-amber" style="padding:10px"><div class="stat-label">Bekleyen</div><div class="stat-value" style="font-size:20px">0</div></div>
+        <div class="stat-card sc-red" style="padding:10px"><div class="stat-label">Hatalı</div><div class="stat-value" style="font-size:20px">0</div></div>
+      </div>
+      <div style="margin-top:12px">
+        <div class="card-title">Toplu Mesaj Gönder</div>
+        <div class="form-group" style="margin-bottom:8px"><label>Hedef Kitle</label>
+          <select class="form-control">
+            <option>Tüm Aktif Öğrenciler (${ogrenciler.filter(o=>o.durum==='Aktif').length} kişi)</option>
+            <option>Borçlu Öğrenciler</option>
+            <option>Belirli Kat — 1. Kat</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin-bottom:8px"><label>Mesaj</label><textarea class="form-control" style="height:65px" placeholder="Mesajınızı yazın..."></textarea></div>
+        <button class="btn btn-primary" onclick="alert('📱 Toplu mesaj gönderildi!')">📱 Gönder</button>
+      </div>
     </div>
+  </div>
+
+  <!-- Şablonlar -->
+  <div class="card card-body">
+    <div class="card-title">📝 Mesaj Şablonları</div>
+    ${MSG_TEMPLATES.map(t=>`
+    <div class="msg-template">
+      <div class="msg-template-hdr">
+        <div class="msg-template-name">${t.ad}</div>
+        <div style="display:flex;gap:6px;align-items:center">
+          <span class="badge bg-blue">${t.kanal}</span>
+          <button class="btn btn-secondary btn-xs">✏️ Düzenle</button>
+          <button class="btn btn-primary btn-xs" onclick="alert('Şablon test gönderimi yapıldı!')">▶ Test</button>
+        </div>
+      </div>
+      <div class="msg-template-body">${t.icerik}</div>
+    </div>`).join('')}
   </div>`;
 }
 
-// ─────────────────────────────────────────
-// ÖĞRENCİ HOME
-// ─────────────────────────────────────────
+// ══════════════════════════════════════
+// ÖĞRENCİ PANELI
+// ══════════════════════════════════════
 function ogrenciHome(b){
-  setHeader('Ana Sayfa','Öğrenci paneli — hoş geldiniz');
+  setHeader('Ana Sayfa','Hoş geldiniz');
   b.innerHTML=`
   <div class="hero-card">
-    <div><h3>👋 Merhaba, Öğrenci!</h3><p>Korkmazlar Özel Kız Yurdu — 2025/2026 Dönemi</p></div>
-    <div class="hero-badge">Oda 101 · 1. Kat</div>
+    <div><h3>👋 Merhaba, Öğrenci!</h3><p>Korkmazlar Özel Kız Yurdu — 2025/2026</p></div>
+    <div class="hero-badge">Oda 101 · Yatak 1</div>
   </div>
-  <div class="grid-2">
+  <div class="g2">
     <div class="card card-body">
-      <div class="card-title">🚪 Oda Bilgilerim</div>
-      <table class="info-table">
+      <div class="card-title">🛏️ Oda Bilgilerim</div>
+      <table class="info-tbl">
         <tr><td class="ik">Oda No</td><td class="iv">101</td></tr>
+        <tr><td class="ik">Yatak No</td><td class="iv">#1</td></tr>
         <tr><td class="ik">Oda Tipi</td><td class="iv">1 Kişilik</td></tr>
         <tr><td class="ik">Kat</td><td class="iv">1. Kat</td></tr>
         <tr><td class="ik">Kayıt Tarihi</td><td class="iv">15.09.2024</td></tr>
         <tr><td class="ik">Dönem Bitiş</td><td class="iv">30.06.2025</td></tr>
       </table>
     </div>
-    <div class="card">
-      <div class="action-bar">
-        <div class="action-bar-title">📢 Güncel Duyurular</div>
-        <button class="btn btn-secondary btn-sm" onclick="navigate('duyurularGor')">Tümü →</button>
+    <div class="card card-body">
+      <div class="card-title">💳 Borç Durumum</div>
+      <div class="stats-3" style="gap:8px;margin-bottom:10px">
+        <div class="stat-card sc-green" style="padding:10px"><div class="stat-label">Ödendi</div><div class="stat-value" style="font-size:18px">8.75K</div></div>
+        <div class="stat-card sc-red" style="padding:10px"><div class="stat-label">Kalan</div><div class="stat-value" style="font-size:18px">1.75K</div></div>
+        <div class="stat-card" style="padding:10px"><div class="stat-label">Toplam</div><div class="stat-value" style="font-size:18px">14K</div></div>
       </div>
-      ${duyurular.slice(0,3).map(d=>`
-      <div class="ariza-item" style="gap:10px">
-        <div style="flex:1">
-          <div class="ariza-title">${d.baslik}</div>
-          <div class="ariza-meta">📅 ${d.tarih}</div>
-        </div>
-      </div>`).join('')}
+      <div class="notice notice-warn">Kasım 2024 aidatınızın kalan kısmı (1.750 ₺) bekliyor.</div>
     </div>
+  </div>
+  <div class="card">
+    <div class="action-bar"><div class="action-bar-title">📢 Duyurular</div></div>
+    ${duyurular.slice(0,3).map(d=>`
+    <div class="duyuru-item" style="margin:0 12px 8px">
+      <div class="duyuru-title">${d.baslik}</div>
+      <div class="duyuru-date">📅 ${d.tarih}</div>
+      <div class="duyuru-body">${d.icerik}</div>
+    </div>`).join('')}
   </div>`;
 }
 
-// ─────────────────────────────────────────
-// ARIZA BİLDİR
-// ─────────────────────────────────────────
-function arizaBildir(b){
-  setHeader('Arıza Bildir','Oda veya tesis arızası bildirin');
-  const odaArizalar=arizalar.filter(a=>a.oda==='101');
+// BAŞVURU YAP (öğrenci)
+let basvuruAdim=1;
+function basvuruYap(b){
+  setHeader('Başvuru Yap','Yurt başvurunuzu doldurun');
   b.innerHTML=`
-  <div class="grid-2">
+  <div class="apply-card">
+    <div class="apply-steps">
+      <div class="apply-step ${basvuruAdim>=1?'done':''}"><div class="apply-step-num">${basvuruAdim>1?'✓':'1'}</div><div class="apply-step-lbl">Kişisel Bilgi</div></div>
+      <div class="apply-step ${basvuruAdim>=2?'done':basvuruAdim===2?'curr':''}"><div class="apply-step-num">${basvuruAdim>2?'✓':'2'}</div><div class="apply-step-lbl">Oda Tercihi</div></div>
+      <div class="apply-step ${basvuruAdim>=3?'done':''}"><div class="apply-step-num">3</div><div class="apply-step-lbl">Gönder</div></div>
+    </div>
+
+    ${basvuruAdim===1?`
+    <div class="card card-body">
+      <div class="card-title">📝 Adım 1: Kişisel Bilgiler</div>
+      <div class="form-row" style="margin-bottom:11px">
+        <div class="form-group"><label>Ad Soyad</label><input class="form-control" id="bv_ad" placeholder="Adınız Soyadınız"></div>
+        <div class="form-group"><label>TC Kimlik No</label><input class="form-control" id="bv_tc" placeholder="11 haneli TC"></div>
+      </div>
+      <div class="form-row" style="margin-bottom:11px">
+        <div class="form-group"><label>Telefon</label><input class="form-control" id="bv_tel" placeholder="05xx xxx xx xx"></div>
+        <div class="form-group"><label>E-posta</label><input class="form-control" id="bv_mail" placeholder="@mail.com"></div>
+      </div>
+      <div class="form-group" style="margin-bottom:0"><label>Okul / Bölüm</label><input class="form-control" id="bv_okul" placeholder="Üniversite ve bölüm bilgisi"></div>
+    </div>
+    <div style="display:flex;justify-content:flex-end;margin-top:10px">
+      <button class="btn btn-primary" onclick="basvuruIleri()">İleri →</button>
+    </div>`
+
+    :basvuruAdim===2?`
+    <div class="card card-body">
+      <div class="card-title">🛏️ Adım 2: Oda Tercihi</div>
+      <div class="form-group" style="margin-bottom:11px"><label>Oda Tipi Tercihi</label>
+        <select class="form-control" id="bv_tip">
+          <option>1 Kişilik (12 oda)</option>
+          <option>2 Kişilik (6 oda)</option>
+          <option>3 Kişilik (18 oda)</option>
+          <option>4 Kişilik (24 oda)</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin-bottom:11px"><label>Dönem</label>
+        <select class="form-control">
+          <option>2025-2026 Güz Dönemi</option>
+          <option>2025-2026 Bahar Dönemi</option>
+          <option>2025-2026 Yıllık</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin-bottom:0"><label>Özel Talep (isteğe bağlı)</label>
+        <textarea class="form-control" id="bv_not" placeholder="Özel talep veya notunuz varsa yazınız..."></textarea>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-top:10px">
+      <button class="btn btn-secondary" onclick="basvuruAdim=1;basvuruYap(document.getElementById('pageBody'))">← Geri</button>
+      <button class="btn btn-primary" onclick="basvuruGonder()">Başvuruyu Gönder 🚀</button>
+    </div>`
+
+    :`
+    <div class="card card-body" style="text-align:center;padding:40px">
+      <div style="font-size:48px;margin-bottom:16px">✅</div>
+      <h3 style="font-size:18px;margin-bottom:8px">Başvurunuz Alındı!</h3>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:16px">Başvurunuz incelenmektedir. Sonuç SMS ve WhatsApp üzerinden bildirilecektir.</p>
+      <div class="notice">Başvuru No: <b>#${Date.now().toString().slice(-6)}</b></div>
+      <button class="btn btn-secondary" style="margin-top:14px" onclick="basvuruAdim=1;navigate('ogrenciHome')">Ana Sayfaya Dön</button>
+    </div>`}`;
+}
+function basvuruIleri(){
+  const ad=document.getElementById('bv_ad')?.value.trim();
+  if(!ad){alert('Ad Soyad gerekli!');return;}
+  basvuruAdim=2;basvuruYap(document.getElementById('pageBody'));
+}
+function basvuruGonder(){
+  const tip=document.getElementById('bv_tip')?.value.split(' ')[0]+' Kişilik';
+  basvurular.unshift({id:Date.now(),ad:'(Öğrenci)',tc:'',tel:'',email:'',tip,tarih:new Date().toISOString().split('T')[0],durum:'Bekliyor',not:'',adim:1,mesaj:''});
+  basvuruAdim=3;basvuruYap(document.getElementById('pageBody'));
+}
+
+// ARIZA BİLDİR (öğrenci)
+function arizaBildir(b){
+  setHeader('Arıza Bildir','Oda arızanızı bildirin');
+  b.innerHTML=`
+  <div class="g2">
     <div class="card card-body">
       <div class="card-title">🔧 Yeni Arıza Bildirimi</div>
-      <div style="display:flex;flex-direction:column;gap:12px">
-        <div class="form-group"><label class="form-label">Oda No</label><input class="form-control" value="101" readonly style="background:var(--bg)"></div>
-        <div class="form-group"><label class="form-label">Öncelik</label>
+      <div style="display:flex;flex-direction:column;gap:11px">
+        <div class="form-group"><label>Oda No</label><input class="form-control" value="101" readonly></div>
+        <div class="form-group"><label>Yatak No</label><input class="form-control" value="1" readonly></div>
+        <div class="form-group"><label>Öncelik</label>
           <select class="form-control" id="ar_onc"><option>Düşük</option><option>Orta</option><option>Yüksek</option></select>
         </div>
-        <div class="form-group"><label class="form-label">Konu</label><input class="form-control" id="ar_konu" placeholder="Kısa başlık..."></div>
-        <div class="form-group"><label class="form-label">Açıklama</label><textarea class="form-control" id="ar_acik" placeholder="Detaylı açıklayın..."></textarea></div>
+        <div class="form-group"><label>Konu</label><input class="form-control" id="ar_konu" placeholder="Kısa başlık"></div>
+        <div class="form-group"><label>Açıklama</label><textarea class="form-control" id="ar_acik" placeholder="Detaylı açıklayın..."></textarea></div>
         <button class="btn btn-primary" onclick="kaydetAriza()">Arıza Bildir</button>
       </div>
     </div>
     <div class="card">
-      <div class="action-bar"><div class="action-bar-title">📋 Önceki Bildirimlerim</div></div>
-      ${odaArizalar.length?odaArizalar.map(a=>`
+      <div class="action-bar"><div class="action-bar-title">📋 Bildirimlerim</div></div>
+      ${arizalar.filter(a=>a.oda==='101').map(a=>`
       <div class="ariza-item">
-        <div class="ariza-icon ${a.durum==='Tamamlandı'?'done':'normal'}">🔧</div>
+        <div class="ariza-icon ${a.durum==='Tamamlandı'?'ai-done':'ai-normal'}">🔧</div>
         <div style="flex:1"><div class="ariza-title">${a.konu}</div><div class="ariza-meta">${a.tarih} · ${a.aciklama}</div></div>
-        <span class="badge ${a.durum==='Tamamlandı'?'badge-green':a.durum==='İşlemde'?'badge-blue':'badge-amber'}">${a.durum}</span>
-      </div>`).join(''):'<div class="empty-state" style="padding:24px"><div class="empty-icon">🔧</div>Henüz bildirim yok.</div>'}
+        <span class="badge ${a.durum==='Tamamlandı'?'bg-green':a.durum==='İşlemde'?'bg-blue':'bg-amber'}">${a.durum}</span>
+      </div>`).join('')||'<div class="empty-state" style="padding:20px"><div class="empty-icon">🔧</div>Bildirim yok.</div>'}
     </div>
   </div>`;
 }
 function kaydetAriza(){
-  const konu=document.getElementById('ar_konu').value.trim();
-  if(!konu){alert('Konu gerekli!');return;}
-  arizalar.unshift({id:Date.now(),oda:'101',konu,aciklama:document.getElementById('ar_acik').value,tarih:new Date().toISOString().split('T')[0],durum:'Bekliyor',oncelik:document.getElementById('ar_onc').value});
+  const k=document.getElementById('ar_konu').value.trim();
+  if(!k){alert('Konu gerekli!');return;}
+  arizalar.unshift({id:Date.now(),oda:'101',yatak:1,konu:k,aciklama:document.getElementById('ar_acik').value,tarih:new Date().toISOString().split('T')[0],durum:'Bekliyor',oncelik:document.getElementById('ar_onc').value});
   alert('Arıza bildiriminiz alındı!');arizaBildir(document.getElementById('pageBody'));
 }
 
-// ─────────────────────────────────────────
-// BELGE TALEP
-// ─────────────────────────────────────────
+// BELGE TALEP (öğrenci)
 function belgeTalep(b){
-  setHeader('Belge Talep Formu','Resmi belgelerinizi buradan talep edin');
+  setHeader('Belge Talep','Resmi belgelerinizi talep edin');
   b.innerHTML=`
   <div style="max-width:480px">
     <div class="card card-body">
       <div class="card-title">📄 Belge Talep Et</div>
-      <div style="display:flex;flex-direction:column;gap:12px">
-        <div class="form-group"><label class="form-label">Belge Tipi</label>
-          <select class="form-control" id="bl_tip">
-            <option>Öğrenci Belgesi</option>
-            <option>İkametgah Belgesi</option>
-            <option>Katkı Belgesi</option>
-            <option>Diğer</option>
+      <div style="display:flex;flex-direction:column;gap:11px">
+        <div class="form-group"><label>Belge Tipi</label>
+          <select class="form-control">
+            <option>Öğrenci Belgesi</option><option>İkametgah Belgesi</option>
+            <option>Katkı Belgesi</option><option>Diğer</option>
           </select>
         </div>
-        <div class="form-group"><label class="form-label">Açıklama (isteğe bağlı)</label>
-          <textarea class="form-control" id="bl_acik" placeholder="Belgeyi ne amaçla kullanacaksınız?"></textarea>
+        <div class="form-group"><label>Açıklama</label>
+          <textarea class="form-control" placeholder="Belgeyi ne amaçla kullanacaksınız?"></textarea>
         </div>
-        <button class="btn btn-primary" onclick="belgeTalepGonder()">Talep Gönder</button>
+        <button class="btn btn-primary" onclick="alert('Belge talebiniz alındı! 1-3 iş günü içinde hazırlanacaktır.')">Talep Gönder</button>
       </div>
     </div>
-    <div class="notice" style="margin-top:12px">
-      📋 Belgeleriniz genellikle <strong>1–3 iş günü</strong> içinde hazırlanır. Hazır olduğunda bilgilendirileceksiniz.
-    </div>
+    <div class="notice" style="margin-top:10px">📋 Belgeler genellikle <b>1-3 iş günü</b> içinde hazırlanır. SMS/WA ile bilgilendirileceksiniz.</div>
   </div>`;
 }
-function belgeTalepGonder(){alert(`"${document.getElementById('bl_tip').value}" talebiniz alındı! 1-3 iş günü içinde hazırlanacaktır.`);}
 
-// ─────────────────────────────────────────
-// DUYURULAR (öğrenci/personel görünümü)
-// ─────────────────────────────────────────
+// DUYURULAR (öğrenci)
 function duyurularGor(b){
   setHeader('Duyurular','Güncel yurt duyuruları');
   b.innerHTML=duyurular.map(d=>`
@@ -1421,18 +1580,18 @@ function duyurularGor(b){
       <div class="duyuru-title">${d.baslik}</div>
       <div class="duyuru-date">📅 ${d.tarih}</div>
       <div class="duyuru-body">${d.icerik}</div>
-    </div>`).join('')||'<div class="empty-state">Duyuru bulunmuyor.</div>';
+    </div>`).join('');
 }
 
-// ─────────────────────────────────────────
+// ══════════════════════════════════════
 // MODAL
-// ─────────────────────────────────────────
-function openModal(html){
-  document.getElementById('modalBox').innerHTML=html;
-  document.getElementById('modalOverlay').classList.add('open');
-}
+// ══════════════════════════════════════
+function openModal(h){document.getElementById('modalBox').innerHTML=h;document.getElementById('modalOverlay').classList.add('open');}
 function closeModal(){document.getElementById('modalOverlay').classList.remove('open');}
-function modalOutsideClick(e){if(e.target===document.getElementById('modalOverlay'))closeModal();}
+function modalOC(e){if(e.target===document.getElementById('modalOverlay'))closeModal();}
+
+// BAŞLANGIC
+buildLoginUI();
 </script>
 </body>
 </html>
